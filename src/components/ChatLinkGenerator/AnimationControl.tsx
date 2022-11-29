@@ -11,7 +11,7 @@ export const AnimationControl = () => {
 			<AnimationTypeSelect />
 			{animationName !== 'none' && <AnimationTimingFunctionSelect />}
 			{animationName !== 'none' && <AnimationDurationInput />}
-			{animationName !== 'scale' && <AnimationScaleInput />}
+			{animationName === 'scale' && <AnimationScaleInput />}
 		</>
 	);
 };

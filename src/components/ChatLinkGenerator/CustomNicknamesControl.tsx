@@ -136,9 +136,9 @@ export const CustomNicknamesControl = () => {
 			</Group>
 			<Switch checked={isGradient} onChange={handleChangeIsGradient} label="Is gradient?" />
 			<Group spacing="sm" grow>
-				<ColorPicker value={startColor} onChange={handleChangeStartColor} format="hex" />
+				<ColorPicker value={startColor} onChange={handleChangeStartColor} size="xl" format="hex" />
 				{isGradient && (
-					<ColorPicker value={endColor} onChange={handleChangeEndColor} format="hex" />
+					<ColorPicker value={endColor} onChange={handleChangeEndColor} size="xl" format="hex" />
 				)}
 			</Group>
 			<NicknamePreview
