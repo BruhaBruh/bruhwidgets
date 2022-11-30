@@ -23,8 +23,13 @@ export const useTranslation = () => {
 	const translation = useContext(TranslationContext);
 
 	const t = useCallback(
-		(key: keyof LocaleTranslation) => {
-			return (translation as Record<string, string>)[key] ?? key;
+		(key: keyof LocaleTranslation, ...args: unknown[]) => {
+			let value = (translation as Record<string, string>)[key];
+			if (!value) return key;
+			args.forEach((arg) => {
+				value = value.replace(/{}/, arg as string);
+			});
+			return value;
 		},
 		[translation]
 	);

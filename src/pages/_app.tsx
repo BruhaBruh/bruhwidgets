@@ -1,10 +1,11 @@
 import { MantineProvider } from '@mantine/core';
 import { useColorScheme } from '@mantine/hooks';
+import { NotificationsProvider } from '@mantine/notifications';
 import { getCookie, setCookie } from 'cookies-next';
 import { AppContext, AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
-import { Settings } from '~/components/Settings';
+import { Spotlight } from '~/components/Spotlight';
 import { TranslationProvider } from '~/context/TranslationContext';
 import { isValidTheme } from '~/lib/isValidTheme';
 import { Locale } from '~/types/locale';
@@ -19,9 +20,9 @@ const App = ({ Component, pageProps, theme }: AppProps & Props) => {
 	const preferedColorScheme = useColorScheme('dark', { getInitialValueInEffect: false });
 	const [currentTheme, setCurrentTheme] = useState(theme);
 
-	const handleChangeTheme = useCallback(
-		(v: string | null) => {
-			if (!v) return;
+	const setTheme = useCallback(
+		(v: BruhitchTheme) => {
+			if (!isValidTheme(v)) return;
 			setCurrentTheme(v as BruhitchTheme);
 			const headers = new Headers();
 			headers.set('Content-Type', 'application/json; charset=UTF8');
@@ -41,8 +42,11 @@ const App = ({ Component, pageProps, theme }: AppProps & Props) => {
 				withGlobalStyles
 				withNormalizeCSS
 			>
-				<Settings currentTheme={currentTheme} onChange={handleChangeTheme} />
-				<Component {...pageProps} />
+				<NotificationsProvider>
+					<Spotlight setCurrentTheme={setTheme}>
+						<Component {...pageProps} />
+					</Spotlight>
+				</NotificationsProvider>
 			</MantineProvider>
 		</TranslationProvider>
 	);

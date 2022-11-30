@@ -25,6 +25,7 @@ module.exports = {
 		'plugin:import/recommended',
 		'plugin:prettier/recommended',
 		'plugin:why/error',
+		'plugin:@next/next/recommended',
 		'airbnb-typescript',
 		'airbnb/hooks',
 		'prettier',

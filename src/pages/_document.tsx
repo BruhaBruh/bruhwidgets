@@ -1,15 +1,20 @@
-import { DocumentProps, Head, Html, Main, NextScript } from 'next/document';
+import { createGetInitialProps } from '@mantine/next';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 
-const Document: React.FC<DocumentProps> = () => {
-	return (
-		<Html lang="ru">
-			<Head />
-			<body>
-				<Main />
-				<NextScript />
-			</body>
-		</Html>
-	);
-};
+const getInitialProps = createGetInitialProps();
 
-export default Document;
+export default class MyDocument extends Document {
+	static getInitialProps = getInitialProps;
+
+	render() {
+		return (
+			<Html>
+				<Head />
+				<body>
+					<Main />
+					<NextScript />
+				</body>
+			</Html>
+		);
+	}
+}
