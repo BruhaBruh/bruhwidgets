@@ -3,6 +3,7 @@ import { useClipboard } from '@mantine/hooks';
 import { NextPage } from 'next';
 import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import { ChatLinkGenerator } from '~/components/ChatLinkGenerator';
+import { useTranslation } from '~/context/TranslationContext';
 import { useChatGenerator } from '~/stores/useChatGenerator';
 import { ChatSettings } from '~/types/chatSettings';
 
@@ -25,6 +26,7 @@ const Chat: NextPage = () => {
 		() => Buffer.from(JSON.stringify(settings), 'utf-8').toString('base64'),
 		[settings]
 	);
+	const t = useTranslation();
 
 	const handleChangeChanel = useCallback(
 		(e: ChangeEvent<HTMLInputElement>) => {
@@ -50,12 +52,12 @@ const Chat: NextPage = () => {
 
 	return (
 		<Container my="xl">
-			<Title>Chat widget</Title>
+			<Title>{t('chat-widget')}</Title>
 			<Divider my="lg" />
 			<Stack spacing="md">
 				<TextInput
-					label="Channel"
-					placeholder="Your channel name"
+					label={t('chat-widget.channel')}
+					placeholder={t('chat-widget.channel.placeholder')}
 					withAsterisk
 					value={channel}
 					onChange={handleChangeChanel}
@@ -63,13 +65,15 @@ const Chat: NextPage = () => {
 				<ChatLinkGenerator />
 				<Group spacing="sm">
 					<TextInput
-						label="Link to chat widget"
+						label={t('chat-widget.link.widget')}
 						readOnly
+						disabled={!channel}
 						value={`http://localhost:3000/widget/chat/${channel}?settings=${hashOfSettings}`}
 						sx={{ flex: 1 }}
 					/>
-					<Tooltip label={clipboard.copied ? 'Copied' : 'Click to copy'}>
+					<Tooltip label={clipboard.copied ? t('copied') : t('copy.tooltip')}>
 						<Button
+							disabled={!channel}
 							onClick={() =>
 								clipboard.copy(
 									`http://localhost:3000/widget/chat/${channel}?settings=${hashOfSettings}`
@@ -77,19 +81,21 @@ const Chat: NextPage = () => {
 							}
 							sx={{ alignSelf: 'flex-end' }}
 						>
-							Copy
+							{t('copy')}
 						</Button>
 					</Tooltip>
 				</Group>
 				<Group spacing="sm">
 					<TextInput
-						label="Link to preiew chat widget"
+						label={t('chat-widget.link.preview')}
 						readOnly
+						disabled={!channel}
 						value={`http://localhost:3000/preview/chat/${channel}?settings=${hashOfSettings}`}
 						sx={{ flex: 1 }}
 					/>
-					<Tooltip label={clipboard.copied ? 'Copied' : 'Click to copy'}>
+					<Tooltip label={clipboard.copied ? t('copied') : t('copy.tooltip')}>
 						<Button
+							disabled={!channel}
 							onClick={() =>
 								clipboard.copy(
 									`http://localhost:3000/preview/chat/${channel}?settings=${hashOfSettings}`
@@ -97,15 +103,20 @@ const Chat: NextPage = () => {
 							}
 							sx={{ alignSelf: 'flex-end' }}
 						>
-							Copy
+							{t('copy')}
 						</Button>
 					</Tooltip>
 				</Group>
 				<Group spacing="sm">
-					<TextInput label="Chat settings hash" readOnly value={hashOfSettings} sx={{ flex: 1 }} />
-					<Tooltip label={clipboard.copied ? 'Copied' : 'Click to copy'}>
+					<TextInput
+						label={t('chat-widget.settings-hash')}
+						readOnly
+						value={hashOfSettings}
+						sx={{ flex: 1 }}
+					/>
+					<Tooltip label={clipboard.copied ? t('copied') : t('copy.tooltip')}>
 						<Button onClick={() => clipboard.copy(hashOfSettings)} sx={{ alignSelf: 'flex-end' }}>
-							Copy
+							{t('copy')}
 						</Button>
 					</Tooltip>
 				</Group>
@@ -113,12 +124,12 @@ const Chat: NextPage = () => {
 					<TextInput
 						value={hash}
 						onChange={handleChangeHash}
-						label="Chat Settings from hash"
-						placeholder="Enter settings hash"
+						label={t('chat-widget.load-settings-hash')}
+						placeholder={t('chat-widget.load-settings-hash.placeholder')}
 						sx={{ flex: 1 }}
 					/>
-					<Button onClick={handleLoadFromHashClick} sx={{ alignSelf: 'flex-end' }}>
-						Load
+					<Button disabled={!hash} onClick={handleLoadFromHashClick} sx={{ alignSelf: 'flex-end' }}>
+						{t('load')}
 					</Button>
 				</Group>
 			</Stack>

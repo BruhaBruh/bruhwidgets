@@ -1,17 +1,13 @@
 import { Select } from '@mantine/core';
 import { useCallback } from 'react';
+import { useTranslation } from '~/context/TranslationContext';
 import { useChatGenerator } from '~/stores/useChatGenerator';
 import { ChatType } from '~/types/chatSettings';
-
-const data: { value: ChatType; label: string }[] = [
-	{ value: 'default', label: 'Default' },
-	{ value: 'blocks', label: 'Blocks' },
-	{ value: 'alternative-blocks', label: 'Alternative blocks' },
-];
 
 export const TypeSelect = () => {
 	const currentType = useChatGenerator((state) => state.type);
 	const setType = useChatGenerator((state) => state.setType);
+	const t = useTranslation();
 
 	const handleChange = useCallback(
 		(v: string | null) => {
@@ -23,9 +19,12 @@ export const TypeSelect = () => {
 
 	return (
 		<Select
-			label="Type of chat widget"
-			placeholder="Pick one"
-			data={data}
+			label={t('chat-widget.type')}
+			data={[
+				{ value: 'default', label: t('chat-widget.type.default') },
+				{ value: 'blocks', label: t('chat-widget.type.blocks') },
+				{ value: 'alternative-blocks', label: t('chat-widget.type.alternative-blocks') },
+			]}
 			value={currentType}
 			onChange={handleChange}
 		/>

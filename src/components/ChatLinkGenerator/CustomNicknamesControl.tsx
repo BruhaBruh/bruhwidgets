@@ -1,6 +1,7 @@
 import { Box, Button, ColorPicker, Group, Stack, Switch, Text, TextInput } from '@mantine/core';
 import chroma from 'chroma-js';
 import React, { ChangeEvent, useCallback, useState } from 'react';
+import { useTranslation } from '~/context/TranslationContext';
 import { useChatGenerator } from '~/stores/useChatGenerator';
 import { ChatCustomNicknameColor } from '~/types/chatSettings';
 
@@ -8,6 +9,7 @@ const NicknamePreview: React.FC<{ nickname: string; color: ChatCustomNicknameCol
 	nickname,
 	color,
 }) => {
+	const t = useTranslation();
 	const gradient = chroma
 		.scale([color.startColor, color.endColor ?? color.startColor])
 		.mode('hcl')
@@ -15,7 +17,7 @@ const NicknamePreview: React.FC<{ nickname: string; color: ChatCustomNicknameCol
 
 	return (
 		<Text>
-			Preview:{' '}
+			{t('preview')}:{' '}
 			<Box
 				component="span"
 				sx={{
@@ -34,6 +36,7 @@ const CustomNickname: React.FC<{ nickname: string; color: ChatCustomNicknameColo
 	nickname,
 	color,
 }) => {
+	const t = useTranslation();
 	const gradient = chroma
 		.scale([color.startColor, color.endColor ?? color.startColor])
 		.mode('hcl')
@@ -65,7 +68,7 @@ const CustomNickname: React.FC<{ nickname: string; color: ChatCustomNicknameColo
 				</span>
 			</Text>
 			<Button onClick={handleRemoveClick} sx={{ alignSelf: 'flex-end' }} color="red">
-				Remove
+				{t('remove')}
 			</Button>
 		</Group>
 	);
@@ -89,6 +92,7 @@ export const CustomNicknamesControl = () => {
 	const [startColor, setStartColor] = useState('#ffffff');
 	const [endColor, setEndColor] = useState('#ffffff');
 	const addCustomNickname = useChatGenerator((state) => state.addCustomNickname);
+	const t = useTranslation();
 
 	const handleChangeNickname = useCallback(
 		(e: ChangeEvent<HTMLInputElement>) => {
@@ -108,9 +112,21 @@ export const CustomNicknamesControl = () => {
 		},
 		[setStartColor]
 	);
+	const handleChangeInputStartColor = useCallback(
+		(e: ChangeEvent<HTMLInputElement>) => {
+			setStartColor(e.currentTarget.value);
+		},
+		[setStartColor]
+	);
 	const handleChangeEndColor = useCallback(
 		(c: string) => {
 			setEndColor(c);
+		},
+		[setEndColor]
+	);
+	const handleChangeInputEndColor = useCallback(
+		(e: ChangeEvent<HTMLInputElement>) => {
+			setEndColor(e.currentTarget.value);
 		},
 		[setEndColor]
 	);
@@ -126,19 +142,51 @@ export const CustomNicknamesControl = () => {
 					value={nickname}
 					onChange={handleChangeNickname}
 					withAsterisk
-					label="Custom nicknames"
-					placeholder="Nickname"
+					label={t('chat-widget.custom-nicknames')}
+					placeholder={t('chat-widget.custom-nicknames.placeholder')}
 					sx={{ flex: 1 }}
 				/>
 				<Button onClick={handleAddClick} sx={{ alignSelf: 'flex-end' }}>
-					Add
+					{t('add')}
 				</Button>
 			</Group>
-			<Switch checked={isGradient} onChange={handleChangeIsGradient} label="Is gradient?" />
+			<Switch
+				checked={isGradient}
+				onChange={handleChangeIsGradient}
+				label={t('chat-widget.custom-nicknames.is-gradient')}
+			/>
 			<Group spacing="sm" grow>
-				<ColorPicker value={startColor} onChange={handleChangeStartColor} size="xl" format="hex" />
+				<Stack spacing="sm">
+					<Text fz="sm">{t('start-color')}</Text>
+					<ColorPicker
+						fullWidth
+						value={startColor}
+						onChange={handleChangeStartColor}
+						size="xl"
+						format="hex"
+					/>
+					<TextInput
+						value={startColor}
+						onChange={handleChangeInputStartColor}
+						placeholder={t('hex-color')}
+					/>
+				</Stack>
 				{isGradient && (
-					<ColorPicker value={endColor} onChange={handleChangeEndColor} size="xl" format="hex" />
+					<Stack spacing="sm">
+						<Text fz="sm">{t('end-color')}</Text>
+						<ColorPicker
+							fullWidth
+							value={endColor}
+							onChange={handleChangeEndColor}
+							size="xl"
+							format="hex"
+						/>
+						<TextInput
+							value={endColor}
+							onChange={handleChangeInputEndColor}
+							placeholder={t('hex-color')}
+						/>
+					</Stack>
 				)}
 			</Group>
 			<NicknamePreview

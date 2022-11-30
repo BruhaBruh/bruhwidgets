@@ -1,20 +1,15 @@
 import { Select } from '@mantine/core';
 import { useCallback, useEffect } from 'react';
+import { useTranslation } from '~/context/TranslationContext';
 import { useChatGenerator } from '~/stores/useChatGenerator';
 import { ChatAnimationName } from '~/types/chatSettings';
-
-const data: { value: ChatAnimationName; label: string }[] = [
-	{ value: 'slide', label: 'Slide' },
-	{ value: 'scale', label: 'Scale' },
-	{ value: 'fade', label: 'Fade' },
-	{ value: 'none', label: 'None' },
-];
 
 export const AnimationTypeSelect = () => {
 	const animationName = useChatGenerator((state) => state.animation.name);
 	const setAnimationName = useChatGenerator((state) => state.setAnimationName);
 	const setAnimationTimingFunction = useChatGenerator((state) => state.setAnimationTimingFunction);
 	const setAnimationOptions = useChatGenerator((state) => state.setAnimationOptions);
+	const t = useTranslation();
 
 	const handleChange = useCallback(
 		(v: string | null) => {
@@ -42,9 +37,13 @@ export const AnimationTypeSelect = () => {
 
 	return (
 		<Select
-			label="Type of animation"
-			placeholder="Pick one"
-			data={data}
+			label={t('chat-widget.animation-type')}
+			data={[
+				{ value: 'slide', label: t('chat-widget.animation-type.slide') },
+				{ value: 'scale', label: t('chat-widget.animation-type.scale') },
+				{ value: 'fade', label: t('chat-widget.animation-type.fade') },
+				{ value: 'none', label: t('chat-widget.animation-type.none') },
+			]}
 			value={animationName}
 			onChange={handleChange}
 		/>

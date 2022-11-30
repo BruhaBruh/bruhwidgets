@@ -1,9 +1,11 @@
 import { Button, Group, Stack, Text, TextInput } from '@mantine/core';
 import React, { ChangeEvent, useCallback, useState } from 'react';
+import { useTranslation } from '~/context/TranslationContext';
 import { useChatGenerator } from '~/stores/useChatGenerator';
 
 const HiddenNickname: React.FC<{ nickname: string }> = ({ nickname }) => {
 	const removeHiddenNickname = useChatGenerator((state) => state.removeHiddenNickname);
+	const t = useTranslation();
 
 	const handleRemoveClick = useCallback(() => {
 		removeHiddenNickname(nickname);
@@ -15,7 +17,7 @@ const HiddenNickname: React.FC<{ nickname: string }> = ({ nickname }) => {
 				{nickname}
 			</Text>
 			<Button sx={{ alignSelf: 'flex-end' }} color="red" onClick={handleRemoveClick}>
-				Remove
+				{t('remove')}
 			</Button>
 		</Group>
 	);
@@ -36,6 +38,7 @@ const HiddenNicknames = () => {
 export const HiddenNicknamesControl = () => {
 	const [nickname, setNickname] = useState('');
 	const addHiddenNickname = useChatGenerator((state) => state.addHiddenNickname);
+	const t = useTranslation();
 
 	const handleChangeNickname = useCallback(
 		(e: ChangeEvent<HTMLInputElement>) => {
@@ -57,12 +60,12 @@ export const HiddenNicknamesControl = () => {
 					value={nickname}
 					onChange={handleChangeNickname}
 					withAsterisk
-					label="Hidden nicknames"
-					placeholder="Nickname to hide"
+					label={t('chat-widget.hidden-nicknames')}
+					placeholder={t('chat-widget.hidden-nicknames.placeholder')}
 					sx={{ flex: 1 }}
 				/>
 				<Button sx={{ alignSelf: 'flex-end' }} onClick={handleAddClick}>
-					Add
+					{t('add')}
 				</Button>
 			</Group>
 			<HiddenNicknames />
