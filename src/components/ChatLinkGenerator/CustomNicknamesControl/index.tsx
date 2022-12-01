@@ -23,10 +23,16 @@ const NicknamePreview: React.FC<{ nickname: string; color: ChatCustomNicknameCol
 	color,
 }) => {
 	const t = useTranslation();
-	const gradient = chroma
-		.scale([color.startColor, color.endColor ?? color.startColor])
-		.mode('hcl')
-		.colors(color.endColor ? 8 : 2, 'hex');
+	let gradient = ['#aaa', '#aaa'];
+
+	try {
+		gradient = chroma
+			.scale([color.startColor, color.endColor ?? color.startColor])
+			.mode('hcl')
+			.colors(color.endColor ? 8 : 2, 'hex');
+	} catch (e) {
+		console.warn(e);
+	}
 
 	return (
 		<Text>
@@ -50,10 +56,16 @@ const CustomNickname: React.FC<{ nickname: string; color: ChatCustomNicknameColo
 	color,
 }) => {
 	const t = useTranslation();
-	const gradient = chroma
-		.scale([color.startColor, color.endColor ?? color.startColor])
-		.mode('hcl')
-		.colors(color.endColor ? 8 : 2, 'hex');
+	let gradient = ['#aaa', '#aaa'];
+
+	try {
+		gradient = chroma
+			.scale([color.startColor, color.endColor ?? color.startColor])
+			.mode('hcl')
+			.colors(color.endColor ? 8 : 2, 'hex');
+	} catch (e) {
+		console.warn(e);
+	}
 	const removeCustomNickname = useChatGenerator((state) => state.removeCustomNickname);
 
 	const handleRemoveClick = useCallback(() => {
