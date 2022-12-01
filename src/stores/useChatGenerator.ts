@@ -17,6 +17,7 @@ const initialState: ChatSettings = {
 	font: '',
 	fontSize: 16,
 	isDisabledPadding: false,
+	hideMessagesStartsWith: '!',
 	animation: {
 		name: 'slide',
 		timingFunction: 'linear',
@@ -48,6 +49,7 @@ type ChatGeneratorFunctions = {
 			options: Record<string, string | number> | undefined
 		) => Record<string, string | number> | undefined
 	) => void;
+	setHideMessagesStartsWith: (hideMessagesStartsWith: string) => void;
 	reset: () => void;
 };
 
@@ -112,6 +114,8 @@ export const useChatGenerator = create<ChatSettings & ChatGeneratorFunctions>((s
 	) {
 		set((p) => ({ ...p, animation: { ...p.animation, options: options(p.animation.options) } }));
 	},
+	setHideMessagesStartsWith: (hideMessagesStartsWith: string) =>
+		set((p) => ({ ...p, hideMessagesStartsWith })),
 	reset() {
 		set((p) => ({ ...p, ...initialState }));
 	},

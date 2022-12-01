@@ -61,6 +61,10 @@ export const ruLocale: LocaleTranslation = {
 	'chat-widget.custom-nicknames': 'Кастомные ники',
 	'chat-widget.custom-nicknames.placeholder': 'Ник для кастомного цвета',
 	'chat-widget.custom-nicknames.is-gradient': 'Градиент?',
+	'chat-widget.hide-messages-starts-with': 'Шаблон для скрытых сообщений',
+	'chat-widget.hide-messages-starts-with.placeholder': 'Шаблон',
+	'chat-widget.hide-messages-starts-with.description':
+		'Сообщение будет скрыто, если начинается с шаблона',
 	'chat-widget.link.widget': 'Ссылка на виджет чата',
 	'chat-widget.link.preview': 'Ссылка на предпросмотр виджета чата',
 	'chat-widget.settings-hash': 'Хэш настроек',

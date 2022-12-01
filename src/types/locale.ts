@@ -61,6 +61,9 @@ export type LocaleTranslation = {
 	'chat-widget.custom-nicknames': string;
 	'chat-widget.custom-nicknames.placeholder': string;
 	'chat-widget.custom-nicknames.is-gradient': string;
+	'chat-widget.hide-messages-starts-with': string;
+	'chat-widget.hide-messages-starts-with.placeholder': string;
+	'chat-widget.hide-messages-starts-with.description': string;
 	'chat-widget.link.widget': string;
 	'chat-widget.link.preview': string;
 	'chat-widget.settings-hash': string;

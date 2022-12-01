@@ -26,4 +26,5 @@ export type ChatSettings = {
 	fontSize: number;
 	isDisabledPadding: boolean;
 	animation: ChatAnimation;
+	hideMessagesStartsWith: string;
 };

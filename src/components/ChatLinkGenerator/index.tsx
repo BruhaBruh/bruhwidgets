@@ -6,6 +6,7 @@ import { FontInput } from '~/components/ChatLinkGenerator/FontInput';
 import { FontSizeInput } from '~/components/ChatLinkGenerator/FontSizeInput';
 import { GradientOnlyForCustomNicknamesSwitch } from '~/components/ChatLinkGenerator/GradientOnlyForCustomNicknamesSwitch';
 import { HiddenNicknamesControl } from '~/components/ChatLinkGenerator/HiddenNicknamesControl';
+import { HideMessagesStartsWithInput } from '~/components/ChatLinkGenerator/HideMessagesStartsWithInput';
 import { HideRewardsSwitch } from '~/components/ChatLinkGenerator/HideRewardsSwitch';
 import { TypeSelect } from '~/components/ChatLinkGenerator/TypeSelect';
 
@@ -13,6 +14,7 @@ export const ChatLinkGenerator = () => {
 	return (
 		<>
 			<TypeSelect />
+			<HideMessagesStartsWithInput />
 			<HideRewardsSwitch />
 			<ColorControl />
 			<FontInput />
