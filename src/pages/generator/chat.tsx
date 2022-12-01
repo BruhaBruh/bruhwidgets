@@ -68,7 +68,7 @@ const Chat: NextPage = () => {
 						label={t('chat-widget.link.widget')}
 						readOnly
 						disabled={!channel}
-						value={`http://localhost:3000/widget/chat/${channel}?settings=${hashOfSettings}`}
+						value={`${process.env.NEXT_PUBLIC_ORIGIN}/widget/chat/${channel}?settings=${hashOfSettings}`}
 						sx={{ flex: 1 }}
 					/>
 					<Tooltip label={clipboard.copied ? t('copied') : t('copy.tooltip')}>
@@ -76,7 +76,7 @@ const Chat: NextPage = () => {
 							disabled={!channel}
 							onClick={() =>
 								clipboard.copy(
-									`http://localhost:3000/widget/chat/${channel}?settings=${hashOfSettings}`
+									`${process.env.NEXT_PUBLIC_ORIGIN}/widget/chat/${channel}?settings=${hashOfSettings}`
 								)
 							}
 							sx={{ alignSelf: 'flex-end' }}
@@ -90,7 +90,7 @@ const Chat: NextPage = () => {
 						label={t('chat-widget.link.preview')}
 						readOnly
 						disabled={!channel}
-						value={`http://localhost:3000/preview/chat/${channel}?settings=${hashOfSettings}`}
+						value={`${process.env.NEXT_PUBLIC_ORIGIN}/preview/chat/${channel}?settings=${hashOfSettings}`}
 						sx={{ flex: 1 }}
 					/>
 					<Tooltip label={clipboard.copied ? t('copied') : t('copy.tooltip')}>
@@ -98,7 +98,7 @@ const Chat: NextPage = () => {
 							disabled={!channel}
 							onClick={() =>
 								clipboard.copy(
-									`http://localhost:3000/preview/chat/${channel}?settings=${hashOfSettings}`
+									`${process.env.NEXT_PUBLIC_ORIGIN}/preview/chat/${channel}?settings=${hashOfSettings}`
 								)
 							}
 							sx={{ alignSelf: 'flex-end' }}

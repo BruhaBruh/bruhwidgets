@@ -5,6 +5,7 @@ import { getCookie, setCookie } from 'cookies-next';
 import { AppContext, AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
+import { Fab } from '~/components/Fab';
 import { Spotlight } from '~/components/Spotlight';
 import { TranslationProvider } from '~/context/TranslationContext';
 import { isValidTheme } from '~/lib/isValidTheme';
@@ -44,6 +45,7 @@ const App = ({ Component, pageProps, theme }: AppProps & Props) => {
 			>
 				<NotificationsProvider>
 					<Spotlight setCurrentTheme={setTheme}>
+						<Fab />
 						<Component {...pageProps} />
 					</Spotlight>
 				</NotificationsProvider>

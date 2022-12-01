@@ -1,4 +1,17 @@
-import { Box, Button, ColorPicker, Group, Stack, Switch, Text, TextInput } from '@mantine/core';
+import {
+	ActionIcon,
+	Box,
+	Button,
+	ColorPicker,
+	Group,
+	Stack,
+	Switch,
+	Text,
+	TextInput,
+	Tooltip,
+} from '@mantine/core';
+import { useClipboard } from '@mantine/hooks';
+import { IconCopy } from '@tabler/icons';
 import chroma from 'chroma-js';
 import React, { ChangeEvent, useCallback, useState } from 'react';
 import { useTranslation } from '~/context/TranslationContext';
@@ -92,6 +105,7 @@ export const CustomNicknamesControl = () => {
 	const [startColor, setStartColor] = useState('#ffffff');
 	const [endColor, setEndColor] = useState('#ffffff');
 	const addCustomNickname = useChatGenerator((state) => state.addCustomNickname);
+	const clipboard = useClipboard();
 	const t = useTranslation();
 
 	const handleChangeNickname = useCallback(
@@ -166,6 +180,23 @@ export const CustomNicknamesControl = () => {
 						format="hex"
 					/>
 					<TextInput
+						icon={
+							<Box
+								sx={{
+									width: 14,
+									height: 14,
+									backgroundColor: startColor,
+									borderRadius: 4,
+								}}
+							/>
+						}
+						rightSection={
+							<Tooltip label={clipboard.copied ? t('copied') : t('copy.tooltip')}>
+								<ActionIcon onClick={() => clipboard.copy(startColor)}>
+									<IconCopy size={18} />
+								</ActionIcon>
+							</Tooltip>
+						}
 						value={startColor}
 						onChange={handleChangeInputStartColor}
 						placeholder={t('hex-color')}
@@ -182,6 +213,23 @@ export const CustomNicknamesControl = () => {
 							format="hex"
 						/>
 						<TextInput
+							icon={
+								<Box
+									sx={{
+										width: 14,
+										height: 14,
+										backgroundColor: endColor,
+										borderRadius: 4,
+									}}
+								/>
+							}
+							rightSection={
+								<Tooltip label={clipboard.copied ? t('copied') : t('copy.tooltip')}>
+									<ActionIcon onClick={() => clipboard.copy(endColor)}>
+										<IconCopy size={18} />
+									</ActionIcon>
+								</Tooltip>
+							}
 							value={endColor}
 							onChange={handleChangeInputEndColor}
 							placeholder={t('hex-color')}

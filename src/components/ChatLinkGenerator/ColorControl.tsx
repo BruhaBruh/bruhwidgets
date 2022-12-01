@@ -1,5 +1,15 @@
-import { ColorPicker, DEFAULT_THEME, Stack, Text, TextInput } from '@mantine/core';
-import { useDebouncedValue } from '@mantine/hooks';
+import {
+	ActionIcon,
+	Box,
+	ColorPicker,
+	DEFAULT_THEME,
+	Stack,
+	Text,
+	TextInput,
+	Tooltip,
+} from '@mantine/core';
+import { useClipboard, useDebouncedValue } from '@mantine/hooks';
+import { IconCopy } from '@tabler/icons';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from '~/context/TranslationContext';
 import { useChatGenerator } from '~/stores/useChatGenerator';
@@ -27,6 +37,7 @@ export const ColorControl = () => {
 	const [currentColor, setCurrentColor] = useState(color);
 	const [debouncedColor] = useDebouncedValue(currentColor, 250);
 	const setColor = useChatGenerator((state) => state.setColor);
+	const clipboard = useClipboard({ timeout: 500 });
 	const t = useTranslation();
 
 	const handleChange = useCallback(
@@ -50,7 +61,28 @@ export const ColorControl = () => {
 	return (
 		<Stack spacing="xs">
 			<Text fz="sm">{t('chat-widget.nickname-color')}</Text>
-			<TextInput value={currentColor} onChange={handleInputChange} placeholder={t('hex-color')} />
+			<TextInput
+				icon={
+					<Box
+						sx={{
+							width: 14,
+							height: 14,
+							backgroundColor: currentColor,
+							borderRadius: 4,
+						}}
+					/>
+				}
+				rightSection={
+					<Tooltip label={clipboard.copied ? t('copied') : t('copy.tooltip')}>
+						<ActionIcon onClick={() => clipboard.copy(currentColor)}>
+							<IconCopy size={18} />
+						</ActionIcon>
+					</Tooltip>
+				}
+				value={currentColor}
+				onChange={handleInputChange}
+				placeholder={t('hex-color')}
+			/>
 			<ColorPicker
 				value={currentColor}
 				onChange={handleChange}
