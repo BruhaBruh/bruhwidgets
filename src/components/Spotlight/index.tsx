@@ -48,6 +48,7 @@ export const Spotlight = ({
 					title: t('spotlight.location.home'),
 					description: t('spotlight.location.home.description'),
 					group: t('spotlight.location'),
+					keywords: ['home', 'index', 'page', 'главная', 'страница'],
 					onTrigger: () => router.push('/'),
 				},
 				{
@@ -55,6 +56,7 @@ export const Spotlight = ({
 					title: t('spotlight.location.chat-widget-generator'),
 					description: t('spotlight.location.chat-widget-generator.description'),
 					group: t('spotlight.location'),
+					keywords: ['chat', 'generator', 'page', 'чат', 'генератор', 'страница'],
 					onTrigger: () => router.push('/generator/chat'),
 				},
 				{
@@ -62,6 +64,7 @@ export const Spotlight = ({
 					title: t('spotlight.language.set-russian'),
 					description: t('spotlight.language.set-russian.description'),
 					group: t('spotlight.language'),
+					keywords: ['set', 'language', 'russian', 'установить', 'русский', 'язык'],
 					onTrigger: () => {
 						const { pathname, asPath, query } = router;
 						router.push({ pathname, query }, asPath, { locale: 'ru' });
@@ -72,6 +75,7 @@ export const Spotlight = ({
 					title: t('spotlight.language.set-english'),
 					description: t('spotlight.language.set-english.description'),
 					group: t('spotlight.language'),
+					keywords: ['set', 'language', 'english', 'установить', 'русский', 'английский'],
 					onTrigger: () => {
 						const { pathname, asPath, query } = router;
 						router.push({ pathname, query }, asPath, { locale: 'en' });
@@ -82,6 +86,7 @@ export const Spotlight = ({
 					title: t('spotlight.theme.set-system'),
 					description: t('spotlight.theme.set-system.description'),
 					group: t('spotlight.theme'),
+					keywords: ['set', 'theme', 'system', 'установить', 'тема', 'системный'],
 					onTrigger: () => setCurrentTheme('system'),
 				},
 				{
@@ -89,6 +94,7 @@ export const Spotlight = ({
 					title: t('spotlight.theme.set-dark'),
 					description: t('spotlight.theme.set-dark.description'),
 					group: t('spotlight.theme'),
+					keywords: ['set', 'theme', 'dark', 'установить', 'тема', 'темный'],
 					onTrigger: () => setCurrentTheme('dark'),
 				},
 				{
@@ -96,6 +102,7 @@ export const Spotlight = ({
 					title: t('spotlight.theme.set-light'),
 					description: t('spotlight.theme.set-light.description'),
 					group: t('spotlight.theme'),
+					keywords: ['set', 'theme', 'light', 'установить', 'тема', 'светлый'],
 					onTrigger: () => setCurrentTheme('light'),
 				},
 			]}

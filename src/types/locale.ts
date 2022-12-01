@@ -9,6 +9,15 @@ export type LocaleTranslation = {
 	copy: string;
 	'copy.tooltip': string;
 	copied: string;
+	'index.widgets': string;
+	'index.about': string;
+	'index.about.idea': string;
+	'index.about.idea.text': string;
+	'index.about.links': string;
+	'index.about.links.github': string;
+	'index.about.links.telegram': string;
+	'index.about.links.twitch': string;
+	'index.about.links.donation-alerts': string;
 	'spotlight.search': string;
 	'spotlight.not-found': string;
 	'spotlight.notification': string;
