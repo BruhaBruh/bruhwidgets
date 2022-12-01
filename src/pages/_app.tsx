@@ -2,7 +2,9 @@ import { MantineProvider } from '@mantine/core';
 import { useColorScheme } from '@mantine/hooks';
 import { NotificationsProvider } from '@mantine/notifications';
 import { getCookie, setCookie } from 'cookies-next';
+import { DefaultSeo } from 'next-seo';
 import { AppContext, AppProps } from 'next/app';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
 import { Fab } from '~/components/Fab';
@@ -35,6 +37,12 @@ const App = ({ Component, pageProps, theme }: AppProps & Props) => {
 	if (router.pathname.startsWith('/widget')) return <Component {...pageProps} />;
 	return (
 		<TranslationProvider locale={(router.locale as Locale) ?? 'en'}>
+			<Head>
+				<link rel="shortcut icon" href="/favicon.svg" />
+			</Head>
+
+			<DefaultSeo titleTemplate="%s | Bruhwidgets" />
+
 			<MantineProvider
 				theme={{
 					colorScheme:

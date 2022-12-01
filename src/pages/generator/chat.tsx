@@ -1,6 +1,7 @@
 import { Button, Container, Divider, Group, Stack, TextInput, Title, Tooltip } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { NextPage } from 'next';
+import { NextSeo } from 'next-seo';
 import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import { ChatLinkGenerator } from '~/components/ChatLinkGenerator';
 import { useTranslation } from '~/context/TranslationContext';
@@ -52,6 +53,7 @@ const Chat: NextPage = () => {
 
 	return (
 		<Container my="xl">
+			<NextSeo title={t('chat-widget')} />
 			<Title>{t('chat-widget')}</Title>
 			<Divider my="lg" />
 			<Stack spacing="md">

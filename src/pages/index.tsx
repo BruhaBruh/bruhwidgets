@@ -1,5 +1,6 @@
 import { Center, Container, Divider, Grid, Paper, Text, Title } from '@mantine/core';
 import { NextPage } from 'next';
+import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { useTranslation } from '~/context/TranslationContext';
 
@@ -8,6 +9,7 @@ const IndexPage: NextPage = () => {
 
 	return (
 		<Container my="xl">
+			<NextSeo title="BruhWidgets" />
 			<Title>BruhWidgets</Title>
 			<Divider my="lg" />
 			<Title fz="xl" mb="md">
