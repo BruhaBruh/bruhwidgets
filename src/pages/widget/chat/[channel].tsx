@@ -86,7 +86,7 @@ const ChatWidgetPage: NextPage<PageProps> = ({ broadcasterId, badges }: PageProp
 				});
 				return p
 					.sort((a, b) => +(b.state['tmi-sent-ts'] ?? 0) - +(a.state['tmi-sent-ts'] ?? 0))
-					.slice(0, 5)
+					.slice(0, 50)
 					.reverse();
 			});
 		},

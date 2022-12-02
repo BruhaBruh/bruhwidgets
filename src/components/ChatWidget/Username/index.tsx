@@ -18,23 +18,23 @@ export const Username: React.FC<UsernameProps> = ({ color, nickname }: UsernameP
 
 	const gradient = useMemo(() => {
 		let startColor: string = defaultColor;
-		let endColor: string | undefined = undefined;
+		let endColor: string | undefined = generateLightenColor(defaultColor);
 
 		if (Object.keys(customNicknames).includes(nickname)) {
 			startColor = customNicknames[nickname].startColor;
 			endColor = customNicknames[nickname].endColor;
-		}
-
-		if (isGradientOnlyForCustomNicknames) {
-			if (color !== null) {
-				startColor = color;
-				endColor = undefined;
-			} else {
-				startColor = defaultColor;
-				endColor = generateLightenColor(defaultColor);
+		} else {
+			if (isGradientOnlyForCustomNicknames) {
+				if (color !== null) {
+					startColor = color;
+					endColor = undefined;
+				} else {
+					startColor = defaultColor;
+					endColor = undefined;
+				}
+			} else if (color !== null) {
+				[startColor, endColor] = generateColors(color, defaultColor);
 			}
-		} else if (color !== null) {
-			[startColor, endColor] = generateColors(color, defaultColor);
 		}
 
 		return getGradientColorsArray(startColor, endColor);

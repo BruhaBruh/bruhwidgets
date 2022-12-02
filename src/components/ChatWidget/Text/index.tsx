@@ -1,4 +1,5 @@
-import Image from 'next/image';
+// eslint-why dont use nextjs image optimization. Highload
+/* eslint-disable @next/next/no-img-element */
 import { useMemo } from 'react';
 import { useChat } from '~/context/ChatContext';
 import styles from './index.module.scss';
@@ -59,9 +60,7 @@ export const Text: React.FC<TextProps> = ({ message }: TextProps) => {
 				const image = template.replace('{id}', id?.[1] ?? '');
 				return (
 					<span key={value + index} className={`text__emote ${styles.text__emote}`}>
-						<Image
-							width={128}
-							height={128}
+						<img
 							className={`text__emote-image ${styles['text__emote-image']}`}
 							src={image}
 							alt=""
@@ -76,9 +75,7 @@ export const Text: React.FC<TextProps> = ({ message }: TextProps) => {
 				);
 				return (
 					<span key={value + index} className={`text__emote ${styles.text__emote}`}>
-						<Image
-							width={128}
-							height={128}
+						<img
 							className={`text__emote-image ${styles['text__emote-image']}`}
 							src={image}
 							alt=""
@@ -91,9 +88,7 @@ export const Text: React.FC<TextProps> = ({ message }: TextProps) => {
 				const image = urls[urls.length - 1][1];
 				return (
 					<span key={value + index} className={`text__emote ${styles.text__emote}`}>
-						<Image
-							width={128}
-							height={128}
+						<img
 							className={`text__emote-image ${styles['text__emote-image']}`}
 							src={image}
 							alt=""
@@ -108,9 +103,7 @@ export const Text: React.FC<TextProps> = ({ message }: TextProps) => {
 					const image = `https:${ffzEmote.urls[keys[keys.length - 1]]}`;
 					return (
 						<span key={value + index} className={`text__emote ${styles.text__emote}`}>
-							<Image
-								width={128}
-								height={128}
+							<img
 								className={`text__emote-image ${styles['text__emote-image']}`}
 								src={image}
 								alt=""
