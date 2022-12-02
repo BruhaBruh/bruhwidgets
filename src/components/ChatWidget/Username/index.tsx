@@ -47,6 +47,7 @@ export const Username: React.FC<UsernameProps> = ({ color, nickname }: UsernameP
 				style={{
 					background: `linear-gradient(to right, ${gradient.join(', ')})`,
 					backgroundClip: 'text',
+					WebkitBackgroundClip: 'text',
 					WebkitTextFillColor: 'transparent',
 				}}
 			>

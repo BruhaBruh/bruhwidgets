@@ -39,6 +39,7 @@ const NicknamePreview: React.FC<{ nickname: string; color: ChatCustomNicknameCol
 				sx={{
 					background: `linear-gradient(to right,${gradient.join(',')})`,
 					backgroundClip: 'text',
+					WebkitBackgroundClip: 'text',
 					WebkitTextFillColor: 'transparent',
 				}}
 			>
@@ -74,6 +75,7 @@ const CustomNickname: React.FC<{ nickname: string; color: ChatCustomNicknameColo
 					sx={{
 						background: `linear-gradient(to right,${gradient.join(',')})`,
 						backgroundClip: 'text',
+						WebkitBackgroundClip: 'text',
 						WebkitTextFillColor: 'transparent',
 					}}
 				>
