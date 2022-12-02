@@ -1,0 +1,8 @@
+.username {
+	display: inline-block;
+
+	&__nickname {
+		word-break: break-all;
+		font-weight: 600;
+	}
+}

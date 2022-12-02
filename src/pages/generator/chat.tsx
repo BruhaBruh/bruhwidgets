@@ -5,6 +5,7 @@ import { NextSeo } from 'next-seo';
 import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import { ChatLinkGenerator } from '~/components/ChatLinkGenerator';
 import { useTranslation } from '~/context/TranslationContext';
+import { fromBase64, toBase64 } from '~/lib/base64';
 import { useChatGenerator } from '~/stores/useChatGenerator';
 import { ChatSettings } from '~/types/chatSettings';
 
@@ -23,10 +24,7 @@ const Chat: NextPage = () => {
 		});
 		return s as ChatSettings;
 	}, [settingsWithFunctions]);
-	const hashOfSettings = useMemo(
-		() => Buffer.from(JSON.stringify(settings), 'utf-8').toString('base64'),
-		[settings]
-	);
+	const hashOfSettings = useMemo(() => toBase64(JSON.stringify(settings)), [settings]);
 	const t = useTranslation();
 
 	const handleChangeChanel = useCallback(
@@ -43,7 +41,7 @@ const Chat: NextPage = () => {
 	);
 	const handleLoadFromHashClick = useCallback(() => {
 		try {
-			const rawJSON = Buffer.from(hash, 'base64').toString('utf-8');
+			const rawJSON = fromBase64(hash);
 			const s = JSON.parse(rawJSON);
 			settingsWithFunctions.set(s);
 		} catch (e) {

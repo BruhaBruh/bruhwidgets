@@ -1,0 +1,21 @@
+.chat-message {
+	position: relative;
+	overflow-wrap: anywhere;
+
+	&__layout {
+		position: relative;
+		border: 0;
+		margin: 0;
+		padding: 0;
+		line-height: calc(var(--font-size) * 1.25);
+	}
+
+	&__mds {
+		display: inline;
+		overflow-wrap: anywhere;
+	}
+
+	&__username-with-badges {
+		white-space: nowrap;
+	}
+}

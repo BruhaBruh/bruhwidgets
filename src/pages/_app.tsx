@@ -11,6 +11,7 @@ import { Fab } from '~/components/Fab';
 import { Spotlight } from '~/components/Spotlight';
 import { TranslationProvider } from '~/context/TranslationContext';
 import { isValidTheme } from '~/lib/isValidTheme';
+import '~/styles/index.scss';
 import { Locale } from '~/types/locale';
 import { BruhitchTheme } from '~/types/theme';
 
@@ -34,7 +35,8 @@ const App = ({ Component, pageProps, theme }: AppProps & Props) => {
 		[setCurrentTheme]
 	);
 
-	if (router.pathname.startsWith('/widget')) return <Component {...pageProps} />;
+	if (router.pathname.startsWith('/widget') || router.pathname.startsWith('/preview'))
+		return <Component {...pageProps} />;
 	return (
 		<TranslationProvider locale={(router.locale as Locale) ?? 'en'}>
 			<Head>

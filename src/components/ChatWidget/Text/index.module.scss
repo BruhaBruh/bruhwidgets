@@ -1,0 +1,25 @@
+.text {
+	position: relative;
+
+	&__words {
+		word-break: break-word;
+	}
+
+	&__emote {
+		margin-right: 0.25em;
+		width: max-content;
+		height: 1em;
+		overflow: visible;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+
+		&-image {
+			height: 1.75em;
+			width: auto !important;
+			display: inline-block;
+			position: relative;
+			top: calc(0.25em + 0.25em);
+		}
+	}
+}

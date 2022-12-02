@@ -7,7 +7,7 @@ import {
 	ChatType,
 } from '~/types/chatSettings';
 
-const initialState: ChatSettings = {
+export const initialState: ChatSettings = {
 	type: 'default',
 	isHideRewards: false,
 	hiddenNicknames: [],

@@ -12,9 +12,9 @@ import {
 } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { IconCopy } from '@tabler/icons';
-import chroma from 'chroma-js';
 import React, { ChangeEvent, useCallback, useState } from 'react';
 import { useTranslation } from '~/context/TranslationContext';
+import { getGradientColorsArray } from '~/lib/getGradientColorsArray';
 import { useChatGenerator } from '~/stores/useChatGenerator';
 import { ChatCustomNicknameColor } from '~/types/chatSettings';
 
@@ -26,10 +26,7 @@ const NicknamePreview: React.FC<{ nickname: string; color: ChatCustomNicknameCol
 	let gradient = ['#aaa', '#aaa'];
 
 	try {
-		gradient = chroma
-			.scale([color.startColor, color.endColor ?? color.startColor])
-			.mode('hcl')
-			.colors(color.endColor ? 8 : 2, 'hex');
+		gradient = getGradientColorsArray(color.startColor, color.endColor);
 	} catch (e) {
 		console.warn(e);
 	}
@@ -42,7 +39,7 @@ const NicknamePreview: React.FC<{ nickname: string; color: ChatCustomNicknameCol
 				sx={{
 					background: `linear-gradient(to right,${gradient.join(',')})`,
 					backgroundClip: 'text',
-					'-webkit-text-fill-color': 'transparent',
+					WebkitTextFillColor: 'transparent',
 				}}
 			>
 				{nickname}
@@ -59,10 +56,7 @@ const CustomNickname: React.FC<{ nickname: string; color: ChatCustomNicknameColo
 	let gradient = ['#aaa', '#aaa'];
 
 	try {
-		gradient = chroma
-			.scale([color.startColor, color.endColor ?? color.startColor])
-			.mode('hcl')
-			.colors(color.endColor ? 8 : 2, 'hex');
+		gradient = getGradientColorsArray(color.startColor, color.endColor);
 	} catch (e) {
 		console.warn(e);
 	}
@@ -80,7 +74,7 @@ const CustomNickname: React.FC<{ nickname: string; color: ChatCustomNicknameColo
 					sx={{
 						background: `linear-gradient(to right,${gradient.join(',')})`,
 						backgroundClip: 'text',
-						'-webkit-text-fill-color': 'transparent',
+						WebkitTextFillColor: 'transparent',
 					}}
 				>
 					{nickname}
