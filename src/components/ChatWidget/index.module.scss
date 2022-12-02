@@ -4,8 +4,9 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	flex-direction: column-reverse;
+	flex-direction: column;
 	display: flex;
+	justify-content: center;
 	align-items: stretch;
 
 	&_padding {
