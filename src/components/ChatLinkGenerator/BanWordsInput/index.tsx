@@ -21,10 +21,11 @@ export const BanWordsInput = () => {
 	);
 	const handleRemove = useCallback(
 		(current: string[]) => {
+			if (!isShow) return;
 			const removedWords = bannedWords.filter((v) => !current.includes(v));
 			removedWords.forEach((word) => removeBanWord(word));
 		},
-		[bannedWords, removeBanWord]
+		[bannedWords, removeBanWord, isShow]
 	);
 	const handleIsShowClick = useCallback(() => setIsShow((p) => !p), [setIsShow]);
 
