@@ -1,10 +1,11 @@
 import { ActionIcon, MultiSelect, Stack } from '@mantine/core';
 import { IconEye, IconEyeOff } from '@tabler/icons';
-import { useCallback, useState } from 'react';
+import { KeyboardEventHandler, useCallback, useState } from 'react';
 import { useTranslation } from '~/context/TranslationContext';
 import { useChatGenerator } from '~/stores/useChatGenerator';
 
 export const BanWordsInput = () => {
+	const [searchValue, setSearchValue] = useState('');
 	const bannedWords = useChatGenerator((state) => state.bannedWords);
 	const addBanWord = useChatGenerator((state) => state.addBanWord);
 	const removeBanWord = useChatGenerator((state) => state.removeBanWord);
@@ -18,6 +19,15 @@ export const BanWordsInput = () => {
 			return undefined;
 		},
 		[addBanWord]
+	);
+	const handleSeparatorKeyDown = useCallback<KeyboardEventHandler<HTMLInputElement>>(
+		(e) => {
+			if (e.code.toLowerCase() !== 'space' && e.code.toLowerCase() !== 'enter') return;
+			e.preventDefault();
+			addBanWord(e.currentTarget.value);
+			setSearchValue('');
+		},
+		[addBanWord, setSearchValue]
 	);
 	const handleRemove = useCallback(
 		(current: string[]) => {
@@ -43,7 +53,10 @@ export const BanWordsInput = () => {
 				searchable
 				creatable
 				getCreateLabel={(query) => `${t('add')} ${query}`}
+				searchValue={searchValue}
+				onSearchChange={setSearchValue}
 				onCreate={handleCreate}
+				onKeyDown={handleSeparatorKeyDown}
 				onChange={handleRemove}
 				rightSection={
 					<ActionIcon color="red" onClick={handleIsShowClick}>
