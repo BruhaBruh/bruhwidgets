@@ -6,8 +6,10 @@ import { ChatWidget } from '~/components/ChatWidget';
 import { fromBase64 } from '~/lib/base64';
 import { getAccessToken } from '~/lib/getAccessToken.server';
 import { getBadges } from '~/lib/getBadges.server';
+import { getBanWordRegExp } from '~/lib/getBanWordRegExp';
 import { getBroadcasterId } from '~/lib/getBroadcasterId.server';
 import { getEmotes } from '~/lib/getEmotes';
+import { getLinkRegExp } from '~/lib/getLinkRegExp';
 import { replaceBetween } from '~/lib/replaceBetween';
 import { initialState } from '~/stores/useChatGenerator';
 import { TwitchBadge } from '~/types/badge';
@@ -79,6 +81,20 @@ const ChatWidgetPage: NextPage<PageProps> = ({ broadcasterId, badges }: PageProp
 					);
 				});
 
+			if (chatSettings.isHideLinks) {
+				formattedMessage = formattedMessage.replaceAll(
+					getLinkRegExp(),
+					chatSettings.linkReplacement
+				);
+			}
+
+			if (chatSettings.bannedWords.length > 0) {
+				formattedMessage = formattedMessage.replaceAll(
+					getBanWordRegExp(chatSettings.bannedWords),
+					chatSettings.banWordReplacement
+				);
+			}
+
 			setMessages((p) => {
 				p.push({
 					state,
@@ -86,7 +102,7 @@ const ChatWidgetPage: NextPage<PageProps> = ({ broadcasterId, badges }: PageProp
 				});
 				return p
 					.sort((a, b) => +(b.state['tmi-sent-ts'] ?? 0) - +(a.state['tmi-sent-ts'] ?? 0))
-					.slice(0, 50)
+					.slice(0, chatSettings.maxMessagesToShow)
 					.reverse();
 			});
 		},
@@ -111,7 +127,7 @@ const ChatWidgetPage: NextPage<PageProps> = ({ broadcasterId, badges }: PageProp
 		try {
 			const rawJson = fromBase64(settings as string);
 			const json = JSON.parse(rawJson);
-			setChatSettings(json);
+			setChatSettings({ ...initialState, ...json });
 		} catch (e) {
 			console.error(e);
 		}

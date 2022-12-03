@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 import { initialState } from '~/stores/useChatGenerator';
 import { TwitchBadge } from '~/types/badge';
 import { ChatSettings } from '~/types/chatSettings';
@@ -43,12 +43,7 @@ export const ChatProvider = ({
 
 export function useChat<T = ChatConfig>(selector?: (config: ChatConfig) => T): T {
 	const ctx = useContext(ChatContext);
-	const [value, setValue] = useState<unknown>(selector?.(ctx) ?? ctx);
-
-	useEffect(() => {
-		if (!selector) return;
-		setValue(selector(ctx));
-	}, [ctx, setValue, selector]);
+	const value = useMemo<unknown>(() => selector?.(ctx) ?? ctx, [ctx, selector]);
 
 	return value as T;
 }

@@ -9,6 +9,22 @@ import { fromBase64, toBase64 } from '~/lib/base64';
 import { useChatGenerator } from '~/stores/useChatGenerator';
 import { ChatSettings } from '~/types/chatSettings';
 
+const getUrl = (channel: string, hash: string, path: string) => {
+	const url = new URL((process.env.NEXT_PUBLIC_ORIGIN ?? 'http://localhost:3000') + path + channel);
+
+	url.searchParams.set('settings', hash);
+
+	return url.toString();
+};
+
+const getWidgetUrl = (channel: string, hash: string) => {
+	return getUrl(channel, hash, '/widget/chat/');
+};
+
+const getPreviewUrl = (channel: string, hash: string) => {
+	return getUrl(channel, hash, '/preview/chat/');
+};
+
 const Chat: NextPage = () => {
 	const [channel, setChannel] = useState('');
 	const [hash, setHash] = useState('');
@@ -68,17 +84,13 @@ const Chat: NextPage = () => {
 						label={t('chat-widget.link.widget')}
 						readOnly
 						disabled={!channel}
-						value={`${process.env.NEXT_PUBLIC_ORIGIN}/widget/chat/${channel}?settings=${hashOfSettings}`}
+						value={getWidgetUrl(channel, hashOfSettings)}
 						sx={{ flex: 1 }}
 					/>
 					<Tooltip label={clipboard.copied ? t('copied') : t('copy.tooltip')}>
 						<Button
 							disabled={!channel}
-							onClick={() =>
-								clipboard.copy(
-									`${process.env.NEXT_PUBLIC_ORIGIN}/widget/chat/${channel}?settings=${hashOfSettings}`
-								)
-							}
+							onClick={() => clipboard.copy(getWidgetUrl(channel, hashOfSettings))}
 							sx={{ alignSelf: 'flex-end' }}
 						>
 							{t('copy')}
@@ -90,17 +102,13 @@ const Chat: NextPage = () => {
 						label={t('chat-widget.link.preview')}
 						readOnly
 						disabled={!channel}
-						value={`${process.env.NEXT_PUBLIC_ORIGIN}/preview/chat/${channel}?settings=${hashOfSettings}`}
+						value={getPreviewUrl(channel, hashOfSettings)}
 						sx={{ flex: 1 }}
 					/>
 					<Tooltip label={clipboard.copied ? t('copied') : t('copy.tooltip')}>
 						<Button
 							disabled={!channel}
-							onClick={() =>
-								clipboard.copy(
-									`${process.env.NEXT_PUBLIC_ORIGIN}/preview/chat/${channel}?settings=${hashOfSettings}`
-								)
-							}
+							onClick={() => clipboard.copy(getPreviewUrl(channel, hashOfSettings))}
 							sx={{ alignSelf: 'flex-end' }}
 						>
 							{t('copy')}

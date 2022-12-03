@@ -24,6 +24,7 @@ const NicknamePreview: React.FC<{ color: string }> = ({ color }) => {
 			<span
 				style={{
 					color: color,
+					fontWeight: 600,
 				}}
 			>
 				BruhaBruh

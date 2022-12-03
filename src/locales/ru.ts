@@ -75,6 +75,20 @@ export const ruLocale: LocaleTranslation = {
 	'chat-widget.hide-messages-starts-with.placeholder': 'Шаблон',
 	'chat-widget.hide-messages-starts-with.description':
 		'Сообщение будет скрыто, если начинается с шаблона',
+	'chat-widget.max-messages-to-show': 'Максимальное число сообщений',
+	'chat-widget.max-messages-to-show.description': 'Большие значения могут вызвать лаги',
+	'chat-widget.link-replacement': 'Замена ссылки',
+	'chat-widget.link-replacement.placeholder': 'Замена',
+	'chat-widget.link-replacement.description':
+		'Эта замена будет приминяться вместо ссылки, если включино скрытие ссылок',
+	'chat-widget.ban-words': 'Банворды',
+	'chat-widget.ban-words.placeholder': 'Банворд',
+	'chat-widget.ban-words.hidden': 'Банворды скрыты',
+	'chat-widget.ban-word-replacement': 'Замена банворда',
+	'chat-widget.ban-word-replacement.placeholder': 'Замена',
+	'chat-widget.ban-word-replacement.description':
+		'Это замена будет приминяться на банворды в сообщении',
+	'chat-widget.hide-links': 'Скрыть ссылки?',
 	'chat-widget.link.widget': 'Ссылка на виджет чата',
 	'chat-widget.link.preview': 'Ссылка на предпросмотр виджета чата',
 	'chat-widget.settings-hash': 'Хэш настроек',

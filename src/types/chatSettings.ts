@@ -27,4 +27,9 @@ export type ChatSettings = {
 	isDisabledPadding: boolean;
 	animation: ChatAnimation;
 	hideMessagesStartsWith: string;
+	isHideLinks: boolean;
+	bannedWords: string[];
+	maxMessagesToShow: number;
+	banWordReplacement: string;
+	linkReplacement: string;
 };

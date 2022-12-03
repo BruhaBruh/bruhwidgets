@@ -73,6 +73,18 @@ export type LocaleTranslation = {
 	'chat-widget.hide-messages-starts-with': string;
 	'chat-widget.hide-messages-starts-with.placeholder': string;
 	'chat-widget.hide-messages-starts-with.description': string;
+	'chat-widget.max-messages-to-show': string;
+	'chat-widget.max-messages-to-show.description': string;
+	'chat-widget.link-replacement': string;
+	'chat-widget.link-replacement.placeholder': string;
+	'chat-widget.link-replacement.description': string;
+	'chat-widget.ban-words': string;
+	'chat-widget.ban-words.placeholder': string;
+	'chat-widget.ban-words.hidden': string;
+	'chat-widget.ban-word-replacement': string;
+	'chat-widget.ban-word-replacement.placeholder': string;
+	'chat-widget.ban-word-replacement.description': string;
+	'chat-widget.hide-links': string;
 	'chat-widget.link.widget': string;
 	'chat-widget.link.preview': string;
 	'chat-widget.settings-hash': string;

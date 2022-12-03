@@ -41,6 +41,7 @@ const NicknamePreview: React.FC<{ nickname: string; color: ChatCustomNicknameCol
 					backgroundClip: 'text',
 					WebkitBackgroundClip: 'text',
 					WebkitTextFillColor: 'transparent',
+					fontWeight: 600,
 				}}
 			>
 				{nickname}

@@ -25,6 +25,11 @@ export const initialState: ChatSettings = {
 			duration: 150,
 		},
 	},
+	isHideLinks: true,
+	bannedWords: [],
+	maxMessagesToShow: 50,
+	banWordReplacement: '***',
+	linkReplacement: '<link>',
 };
 
 type ChatGeneratorFunctions = {
@@ -50,6 +55,12 @@ type ChatGeneratorFunctions = {
 		) => Record<string, string | number> | undefined
 	) => void;
 	setHideMessagesStartsWith: (hideMessagesStartsWith: string) => void;
+	setIsHideLinks: (isHideLinks: boolean) => void;
+	addBanWord: (banWord: string) => void;
+	removeBanWord: (banWord: string) => void;
+	setMaxMessagesToShow: (maxMessagesToShow: number) => void;
+	setBanWordReplacement: (banWordReplacement: string) => void;
+	setLinkReplacement: (link: string) => void;
 	reset: () => void;
 };
 
@@ -116,6 +127,17 @@ export const useChatGenerator = create<ChatSettings & ChatGeneratorFunctions>((s
 	},
 	setHideMessagesStartsWith: (hideMessagesStartsWith: string) =>
 		set((p) => ({ ...p, hideMessagesStartsWith })),
+	setIsHideLinks: (isHideLinks) => set((p) => ({ ...p, isHideLinks })),
+	addBanWord: (banWord) =>
+		set((p) => ({
+			...p,
+			bannedWords: Array.from(new Set([...p.bannedWords, banWord.toLowerCase()])),
+		})),
+	removeBanWord: (banWord) =>
+		set((p) => ({ ...p, bannedWords: p.bannedWords.filter((v) => v !== banWord.toLowerCase()) })),
+	setMaxMessagesToShow: (maxMessagesToShow) => set((p) => ({ ...p, maxMessagesToShow })),
+	setBanWordReplacement: (banWordReplacement) => set((p) => ({ ...p, banWordReplacement })),
+	setLinkReplacement: (linkReplacement) => set((p) => ({ ...p, linkReplacement })),
 	reset() {
 		set((p) => ({ ...p, ...initialState }));
 	},
