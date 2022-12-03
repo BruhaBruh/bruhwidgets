@@ -1,0 +1,10 @@
+.chat-message {
+	border-radius: calc(var(--font-size) / 2);
+	background: var(--background-color);
+	padding: calc(var(--font-size) / 2);
+
+	&__username-with-badges {
+		white-space: nowrap;
+		margin-bottom: calc(var(--font-size) / 4);
+	}
+}
