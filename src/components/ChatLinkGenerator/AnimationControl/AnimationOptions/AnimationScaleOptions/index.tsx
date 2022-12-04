@@ -3,12 +3,12 @@ import { useCallback } from 'react';
 import { useTranslation } from '~/context/TranslationContext';
 import { useChatGenerator } from '~/stores/useChatGenerator';
 
-export const AnimationScaleInput = () => {
+export const AnimationScaleOptions = () => {
 	const options = useChatGenerator((state) => state.animation.options);
 	const setAnimationOptionsFn = useChatGenerator((state) => state.setAnimationOptionsFn);
 	const t = useTranslation();
 
-	const handleChange = useCallback(
+	const handleInitialScaleChange = useCallback(
 		(v: number | undefined) => {
 			if (v === undefined) return;
 			setAnimationOptionsFn((opts) => ({ ...opts, initialScale: v }));
@@ -17,12 +17,14 @@ export const AnimationScaleInput = () => {
 	);
 
 	return (
-		<NumberInput
-			label={t('chat-widget.animation-initial-scale')}
-			withAsterisk
-			value={(options?.scale as number) ?? 0}
-			onChange={handleChange}
-			min={0}
-		/>
+		<>
+			<NumberInput
+				label={t('chat-widget.animation-initial-scale')}
+				withAsterisk
+				value={options.scale ? +options.scale : 0}
+				onChange={handleInitialScaleChange}
+				min={0}
+			/>
+		</>
 	);
 };

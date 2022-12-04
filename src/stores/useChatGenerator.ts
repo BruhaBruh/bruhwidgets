@@ -1,11 +1,6 @@
 import create from 'zustand';
-import {
-	ChatAnimationName,
-	ChatAnimationTimingFunction,
-	ChatCustomNicknameColor,
-	ChatSettings,
-	ChatType,
-} from '~/types/chatSettings';
+import { AnimationName, AnimationOptions, AnimationTimingFunction } from '~/types/animation';
+import { ChatCustomNicknameColor, ChatSettings, ChatType } from '~/types/chatSettings';
 
 export const initialState: ChatSettings = {
 	type: 'default',
@@ -22,7 +17,7 @@ export const initialState: ChatSettings = {
 		name: 'slide',
 		timingFunction: 'linear',
 		options: {
-			duration: 150,
+			duration: 300,
 		},
 	},
 	isHideLinks: true,
@@ -46,14 +41,10 @@ type ChatGeneratorFunctions = {
 	setFont: (font: string) => void;
 	setFontSize: (fontSize: number) => void;
 	setIsDisabledPadding: (isDisabledPadding: boolean) => void;
-	setAnimationName: (name: ChatAnimationName) => void;
-	setAnimationTimingFunction: (timingFunction: ChatAnimationTimingFunction | undefined) => void;
-	setAnimationOptions: (options: Record<string, string | number> | undefined) => void;
-	setAnimationOptionsFn: (
-		options: (
-			options: Record<string, string | number> | undefined
-		) => Record<string, string | number> | undefined
-	) => void;
+	setAnimationName: (name: AnimationName) => void;
+	setAnimationTimingFunction: (timingFunction: AnimationTimingFunction) => void;
+	setAnimationOptions: (options: AnimationOptions) => void;
+	setAnimationOptionsFn: (options: (options: AnimationOptions) => AnimationOptions) => void;
 	setHideMessagesStartsWith: (hideMessagesStartsWith: string) => void;
 	setIsHideLinks: (isHideLinks: boolean) => void;
 	addBanWord: (banWord: string) => void;
@@ -109,20 +100,16 @@ export const useChatGenerator = create<ChatSettings & ChatGeneratorFunctions>((s
 	setIsDisabledPadding(isDisabledPadding: boolean) {
 		set((p) => ({ ...p, isDisabledPadding }));
 	},
-	setAnimationName(name: ChatAnimationName) {
+	setAnimationName(name: AnimationName) {
 		set((p) => ({ ...p, animation: { ...p.animation, name } }));
 	},
-	setAnimationTimingFunction(timingFunction: ChatAnimationTimingFunction | undefined) {
+	setAnimationTimingFunction(timingFunction: AnimationTimingFunction) {
 		set((p) => ({ ...p, animation: { ...p.animation, timingFunction } }));
 	},
-	setAnimationOptions(options: Record<string, string | number> | undefined) {
+	setAnimationOptions(options: AnimationOptions) {
 		set((p) => ({ ...p, animation: { ...p.animation, options } }));
 	},
-	setAnimationOptionsFn(
-		options: (
-			options: Record<string, string | number> | undefined
-		) => Record<string, string | number> | undefined
-	) {
+	setAnimationOptionsFn(options: (options: AnimationOptions) => AnimationOptions) {
 		set((p) => ({ ...p, animation: { ...p.animation, options: options(p.animation.options) } }));
 	},
 	setHideMessagesStartsWith: (hideMessagesStartsWith: string) =>

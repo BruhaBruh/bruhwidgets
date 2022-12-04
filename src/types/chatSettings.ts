@@ -1,3 +1,5 @@
+import { AnimationName, AnimationOptions, AnimationTimingFunction } from '~/types/animation';
+
 export type ChatType = 'default' | 'blocks' | 'alternative-blocks';
 
 export type ChatCustomNicknameColor = {
@@ -5,14 +7,10 @@ export type ChatCustomNicknameColor = {
 	endColor?: string;
 };
 
-export type ChatAnimationName = 'slide' | 'scale' | 'fade' | 'none';
-
-export type ChatAnimationTimingFunction = 'linear';
-
 export type ChatAnimation = {
-	name: ChatAnimationName;
-	timingFunction?: ChatAnimationTimingFunction;
-	options?: Record<string, number | string>;
+	name: AnimationName;
+	timingFunction: AnimationTimingFunction;
+	options: AnimationOptions;
 };
 
 export type ChatSettings = {

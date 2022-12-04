@@ -1,0 +1,89 @@
+import { CSSProperties } from 'react';
+import { TransitionStatus } from 'react-transition-group';
+import { getAnimationDuration } from '~/lib/getAnimationDuration';
+import { AnimationName, AnimationOptions, AnimationTimingFunction } from '~/types/animation';
+
+const getFadeAnimationStyle = (
+	status: TransitionStatus,
+	timingFunction: AnimationTimingFunction,
+	options: AnimationOptions
+): CSSProperties => {
+	const duration = getAnimationDuration(options);
+	const defaultStyle: CSSProperties = {
+		transition: `opacity ${duration}ms ${timingFunction}`,
+		opacity: 0,
+	};
+	const transitionStyles: Record<TransitionStatus, CSSProperties> = {
+		entering: { opacity: 1 },
+		entered: { opacity: 1 },
+		exiting: { opacity: 0 },
+		exited: { opacity: 0 },
+		unmounted: { opacity: 0 },
+	};
+
+	return { ...defaultStyle, ...transitionStyles[status] };
+};
+
+const getScaleAnimationStyle = (
+	status: TransitionStatus,
+	timingFunction: AnimationTimingFunction,
+	options: AnimationOptions
+): CSSProperties => {
+	const duration = getAnimationDuration(options);
+	const initialScale = options.initialScale ? +options.initialScale : 0;
+	const defaultStyle: CSSProperties = {
+		transition: `transform ${duration}ms ${timingFunction}`,
+		transform: `scale(${initialScale})`,
+	};
+	const transitionStyles: Record<TransitionStatus, CSSProperties> = {
+		entering: { transform: `scale(1)` },
+		entered: { transform: `scale(1)` },
+		exiting: { transform: `scale(${initialScale})` },
+		exited: { transform: `scale(${initialScale})` },
+		unmounted: { transform: `scale(${initialScale})` },
+	};
+
+	return { ...defaultStyle, ...transitionStyles[status] };
+};
+
+const getSlideAnimationStyle = (
+	status: TransitionStatus,
+	timingFunction: AnimationTimingFunction,
+	options: AnimationOptions
+): CSSProperties => {
+	const duration = getAnimationDuration(options);
+	const fromDirection = (
+		typeof options.fromDirection === 'string' ? options.fromDirection : 'right'
+	) as 'left' | 'right' | 'top' | 'bottom';
+	const initialTranform =
+		fromDirection === 'top' || fromDirection === 'bottom'
+			? `translateY(${fromDirection === 'top' ? '-' : ''}100%)`
+			: `translateX(${fromDirection === 'left' ? '-' : ''}100%)`;
+	const endTranform =
+		fromDirection === 'top' || fromDirection === 'bottom' ? 'translateY(0)' : 'translateX(0)';
+	const defaultStyle: CSSProperties = {
+		transition: `transform ${duration}ms ${timingFunction}`,
+		transform: initialTranform,
+	};
+	const transitionStyles: Record<TransitionStatus, CSSProperties> = {
+		entering: { transform: endTranform },
+		entered: { transform: endTranform },
+		exiting: { transform: initialTranform },
+		exited: { transform: initialTranform },
+		unmounted: { transform: initialTranform },
+	};
+
+	return { ...defaultStyle, ...transitionStyles[status] };
+};
+
+export const getAnimationStyle = (
+	status: TransitionStatus,
+	animation: AnimationName,
+	timingFunction: AnimationTimingFunction,
+	options: AnimationOptions
+): CSSProperties => {
+	if (animation === 'fade') return getFadeAnimationStyle(status, timingFunction, options);
+	if (animation === 'scale') return getScaleAnimationStyle(status, timingFunction, options);
+	if (animation === 'slide') return getSlideAnimationStyle(status, timingFunction, options);
+	return {};
+};

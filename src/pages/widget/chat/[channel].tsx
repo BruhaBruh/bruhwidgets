@@ -1,6 +1,6 @@
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
+import { createRef, useCallback, useEffect, useState } from 'react';
 import tmi from 'tmi.js';
 import { ChatWidget } from '~/components/ChatWidget';
 import { fromBase64 } from '~/lib/base64';
@@ -99,6 +99,7 @@ const ChatWidgetPage: NextPage<PageProps> = ({ broadcasterId, badges }: PageProp
 				p.push({
 					state,
 					text: formattedMessage,
+					nodeRef: createRef(),
 				});
 				return p
 					.sort((a, b) => +(b.state['tmi-sent-ts'] ?? 0) - +(a.state['tmi-sent-ts'] ?? 0))

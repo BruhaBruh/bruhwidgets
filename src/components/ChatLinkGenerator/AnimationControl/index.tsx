@@ -1,17 +1,13 @@
-import { AnimationDurationInput } from '~/components/ChatLinkGenerator/AnimationDurationInput';
-import { AnimationScaleInput } from '~/components/ChatLinkGenerator/AnimationScaleInput';
-import { AnimationTimingFunctionSelect } from '~/components/ChatLinkGenerator/AnimationTimingFunctionSelect';
-import { AnimationTypeSelect } from '~/components/ChatLinkGenerator/AnimationTypeSelect';
-import { useChatGenerator } from '~/stores/useChatGenerator';
+import { AnimationOptions } from '~/components/ChatLinkGenerator/AnimationControl/AnimationOptions';
+import { AnimationTimingFunctionSelect } from '~/components/ChatLinkGenerator/AnimationControl/AnimationTimingFunctionSelect';
+import { AnimationTypeSelect } from '~/components/ChatLinkGenerator/AnimationControl/AnimationTypeSelect';
 
 export const AnimationControl = () => {
-	const animationName = useChatGenerator((state) => state.animation.name);
 	return (
 		<>
 			<AnimationTypeSelect />
-			{animationName !== 'none' && <AnimationTimingFunctionSelect />}
-			{animationName !== 'none' && <AnimationDurationInput />}
-			{animationName === 'scale' && <AnimationScaleInput />}
+			<AnimationTimingFunctionSelect />
+			<AnimationOptions />
 		</>
 	);
 };

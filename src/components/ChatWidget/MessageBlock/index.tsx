@@ -1,13 +1,13 @@
-import React from 'react';
+import { forwardRef } from 'react';
 import { Badges } from '~/components/ChatWidget/Badges';
 import { MessageProps } from '~/components/ChatWidget/MessageDefault';
 import { Text } from '~/components/ChatWidget/Text';
 import { Username } from '~/components/ChatWidget/Username';
 import styles from './index.module.scss';
 
-export const MessageBlock: React.FC<MessageProps> = ({ message }) => {
+const messageBlock = forwardRef<HTMLDivElement, MessageProps>(({ message, style }, ref) => {
 	return (
-		<div className={`chat-message ${styles['chat-message']}`}>
+		<div ref={ref} className={`chat-message ${styles['chat-message']}`} style={style}>
 			<div className={`chat-message__layout ${styles['chat-message__layout']}`}>
 				<div className={`chat-message__mds ${styles['chat-message__mds']}`}>
 					<span
@@ -25,4 +25,8 @@ export const MessageBlock: React.FC<MessageProps> = ({ message }) => {
 			</div>
 		</div>
 	);
-};
+});
+
+messageBlock.displayName = 'MessageBlock';
+
+export const MessageBlock = messageBlock;

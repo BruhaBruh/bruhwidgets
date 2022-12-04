@@ -61,6 +61,11 @@ export type LocaleTranslation = {
 	'chat-widget.animation-type.scale': string;
 	'chat-widget.animation-type.fade': string;
 	'chat-widget.animation-type.none': string;
+	'chat-widget.animation-slide-direction': string;
+	'chat-widget.animation-slide-direction.top': string;
+	'chat-widget.animation-slide-direction.bottom': string;
+	'chat-widget.animation-slide-direction.left': string;
+	'chat-widget.animation-slide-direction.right': string;
 	'chat-widget.animation-timing-function': string;
 	'chat-widget.animation-duration': string;
 	'chat-widget.animation-initial-scale': string;

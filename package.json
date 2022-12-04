@@ -29,6 +29,7 @@
 		"next-seo": "^5.14.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
+		"react-transition-group": "^4.4.5",
 		"sass": "^1.56.1",
 		"tmi.js": "^1.8.5",
 		"zustand": "^4.1.4"
@@ -41,6 +42,7 @@
 		"@types/node": "^18.11.9",
 		"@types/react": "^18.0.25",
 		"@types/react-dom": "^18.0.9",
+		"@types/react-transition-group": "^4.4.5",
 		"@types/tmi.js": "^1.8.2",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
