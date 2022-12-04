@@ -1,5 +1,6 @@
 import { CSSProperties } from 'react';
 import { TransitionStatus } from 'react-transition-group';
+import { easings } from '~/lib/easings';
 import { getAnimationDuration } from '~/lib/getAnimationDuration';
 import { AnimationName, AnimationOptions, AnimationTimingFunction } from '~/types/animation';
 
@@ -10,7 +11,7 @@ const getFadeAnimationStyle = (
 ): CSSProperties => {
 	const duration = getAnimationDuration(options);
 	const defaultStyle: CSSProperties = {
-		transition: `opacity ${duration}ms ${timingFunction}`,
+		transition: `opacity ${duration}ms ${easings[timingFunction]}`,
 		opacity: 0,
 	};
 	const transitionStyles: Record<TransitionStatus, CSSProperties> = {
@@ -32,7 +33,7 @@ const getScaleAnimationStyle = (
 	const duration = getAnimationDuration(options);
 	const initialScale = options.initialScale ? +options.initialScale : 0;
 	const defaultStyle: CSSProperties = {
-		transition: `transform ${duration}ms ${timingFunction}`,
+		transition: `transform ${duration}ms ${easings[timingFunction]}`,
 		transform: `scale(${initialScale})`,
 	};
 	const transitionStyles: Record<TransitionStatus, CSSProperties> = {
@@ -62,7 +63,7 @@ const getSlideAnimationStyle = (
 	const endTranform =
 		fromDirection === 'top' || fromDirection === 'bottom' ? 'translateY(0)' : 'translateX(0)';
 	const defaultStyle: CSSProperties = {
-		transition: `transform ${duration}ms ${timingFunction}`,
+		transition: `transform ${duration}ms ${easings[timingFunction]}`,
 		transform: initialTranform,
 	};
 	const transitionStyles: Record<TransitionStatus, CSSProperties> = {
