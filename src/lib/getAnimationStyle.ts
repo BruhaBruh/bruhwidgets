@@ -37,11 +37,11 @@ const getScaleAnimationStyle = (
 		transform: `scale(${initialScale})`,
 	};
 	const transitionStyles: Record<TransitionStatus, CSSProperties> = {
-		entering: { transform: `scale(1)` },
-		entered: { transform: `scale(1)` },
-		exiting: { transform: `scale(${initialScale})` },
-		exited: { transform: `scale(${initialScale})` },
-		unmounted: { transform: `scale(${initialScale})` },
+		entering: { transform: `scale(1)`, opacity: 1 },
+		entered: { transform: `scale(1)`, opacity: 1 },
+		exiting: { transform: `scale(${initialScale})`, opacity: 0 },
+		exited: { transform: `scale(${initialScale})`, opacity: 0 },
+		unmounted: { transform: `scale(${initialScale})`, opacity: 0 },
 	};
 
 	return { ...defaultStyle, ...transitionStyles[status] };
@@ -67,11 +67,11 @@ const getSlideAnimationStyle = (
 		transform: initialTranform,
 	};
 	const transitionStyles: Record<TransitionStatus, CSSProperties> = {
-		entering: { transform: endTranform },
-		entered: { transform: endTranform },
-		exiting: { transform: initialTranform },
-		exited: { transform: initialTranform },
-		unmounted: { transform: initialTranform },
+		entering: { transform: endTranform, opacity: 1 },
+		entered: { transform: endTranform, opacity: 1 },
+		exiting: { transform: initialTranform, opacity: 0 },
+		exited: { transform: initialTranform, opacity: 0 },
+		unmounted: { transform: initialTranform, opacity: 0 },
 	};
 
 	return { ...defaultStyle, ...transitionStyles[status] };

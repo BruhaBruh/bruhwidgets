@@ -1,5 +1,6 @@
 import { MantineProvider } from '@mantine/core';
 import { useColorScheme } from '@mantine/hooks';
+import { ModalsProvider } from '@mantine/modals';
 import { NotificationsProvider } from '@mantine/notifications';
 import { getCookie, setCookie } from 'cookies-next';
 import { DefaultSeo } from 'next-seo';
@@ -53,12 +54,14 @@ const App = ({ Component, pageProps, theme }: AppProps & Props) => {
 				withGlobalStyles
 				withNormalizeCSS
 			>
-				<NotificationsProvider>
-					<Spotlight setCurrentTheme={setTheme}>
-						<Fab />
-						<Component {...pageProps} />
-					</Spotlight>
-				</NotificationsProvider>
+				<ModalsProvider>
+					<NotificationsProvider>
+						<Spotlight setCurrentTheme={setTheme}>
+							<Fab />
+							<Component {...pageProps} />
+						</Spotlight>
+					</NotificationsProvider>
+				</ModalsProvider>
 			</MantineProvider>
 		</TranslationProvider>
 	);

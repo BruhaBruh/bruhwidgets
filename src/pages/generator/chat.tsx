@@ -1,5 +1,18 @@
-import { Button, Container, Divider, Group, Stack, TextInput, Title, Tooltip } from '@mantine/core';
+import {
+	ActionIcon,
+	AspectRatio,
+	Button,
+	Container,
+	Divider,
+	Group,
+	Stack,
+	TextInput,
+	Title,
+	Tooltip,
+} from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
+import { openModal } from '@mantine/modals';
+import { IconScanEye } from '@tabler/icons';
 import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
 import { ChangeEvent, useCallback, useMemo, useState } from 'react';
@@ -72,9 +85,41 @@ const Chat: NextPage = () => {
 		}
 	}, [hash, settingsWithFunctions]);
 
+	const handleOpenPreview = useCallback(() => {
+		openModal({
+			title: t('preview'),
+			children: (
+				<AspectRatio ratio={3 / 4}>
+					<iframe
+						title="chat-widget-preview"
+						src={getPreviewUrl(channel, hashOfSettings)}
+						style={{ border: 'none' }}
+					/>
+				</AspectRatio>
+			),
+		});
+	}, [channel, hashOfSettings, t]);
+
 	return (
 		<Container my="xl">
 			<NextSeo title={t('chat-widget')} />
+
+			<ActionIcon
+				disabled={!channel}
+				size="lg"
+				color="blue"
+				variant="subtle"
+				sx={{
+					position: 'fixed',
+					bottom: 'calc(1rem + 2.75rem + 0.5rem)',
+					right: '1rem',
+					zIndex: 10,
+				}}
+				onClick={handleOpenPreview}
+			>
+				<IconScanEye size={26} />
+			</ActionIcon>
+
 			<Title>{t('chat-widget')}</Title>
 			<Divider my="lg" />
 			<Stack spacing="md">
