@@ -32,7 +32,7 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
 		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif`,
 						'--font-size': `${chatSettings.fontSize}px`,
 						'--background-color-rgb': '17,24,39',
-						'--background-color': 'rgba(var(--background-color-rgb),0.9)',
+						'--background-color': 'rgba(var(--background-color-rgb),0.75)',
 						'--color-rgb': '249,250,251',
 						'--color': 'rgb(var(--color-rgb))',
 					} as CSSProperties
