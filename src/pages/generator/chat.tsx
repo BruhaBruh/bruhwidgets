@@ -22,13 +22,6 @@ import { fromBase64, toBase64 } from '~/lib/base64';
 import { useChatGenerator } from '~/stores/useChatGenerator';
 import { ChatSettings } from '~/types/chatSettings';
 
-const getNormalizedHash = (hash: string) => {
-	const url = new URL('http://localhost:3000?s=' + hash);
-	const s = url.searchParams.get('s');
-	if (s === null) throw new Error('hash is empty');
-	return s;
-};
-
 const getUrl = (channel: string, hash: string, path: string) => {
 	const url = new URL((process.env.NEXT_PUBLIC_ORIGIN ?? 'http://localhost:3000') + path + channel);
 
@@ -60,7 +53,10 @@ const Chat: NextPage = () => {
 		});
 		return s as ChatSettings;
 	}, [settingsWithFunctions]);
-	const hashOfSettings = useMemo(() => toBase64(JSON.stringify(settings)), [settings]);
+	const hashOfSettings = useMemo(
+		() => encodeURIComponent(toBase64(JSON.stringify(settings))),
+		[settings]
+	);
 	const t = useTranslation();
 
 	const handleChangeChanel = useCallback(
@@ -77,7 +73,7 @@ const Chat: NextPage = () => {
 	);
 	const handleLoadFromHashClick = useCallback(() => {
 		try {
-			const rawJSON = fromBase64(getNormalizedHash(hash));
+			const rawJSON = fromBase64(decodeURIComponent(hash));
 			const s = JSON.parse(rawJSON);
 			settingsWithFunctions.set(s);
 		} catch (e) {

@@ -194,7 +194,7 @@ const ChatWidgetPage: NextPage<PageProps> = ({ broadcasterId, badges }: PageProp
 	useEffect(() => {
 		const { channel: queryChannel, settings } = router.query;
 		try {
-			const rawJson = fromBase64(settings as string);
+			const rawJson = fromBase64(decodeURIComponent(settings as string));
 			const json = JSON.parse(rawJson);
 			setChatSettings({ ...initialState, ...json });
 		} catch (e) {
