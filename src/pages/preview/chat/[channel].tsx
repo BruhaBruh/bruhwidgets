@@ -196,8 +196,12 @@ const ChatWidgetPage: NextPage<PageProps> = ({ broadcasterId, badges }: PageProp
 		try {
 			const raw = decodeURIComponent(settings as string);
 			chatSettings.loadFromBase64(raw);
-		} catch (e) {
-			console.error(e);
+		} catch {
+			try {
+				chatSettings.loadFromBase64(settings as string);
+			} catch (e) {
+				console.error(e);
+			}
 		}
 
 		getEmotes(queryChannel as string, broadcasterId).then((v) => setEmotes(v));

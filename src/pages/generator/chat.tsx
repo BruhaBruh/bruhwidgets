@@ -61,8 +61,12 @@ const Chat: NextPage = () => {
 		try {
 			const raw = decodeURIComponent(hash);
 			loadFromBase64(raw);
-		} catch (e) {
-			console.error(e);
+		} catch {
+			try {
+				loadFromBase64(hash);
+			} catch (e) {
+				console.error(e);
+			}
 		}
 	}, [hash, loadFromBase64]);
 
