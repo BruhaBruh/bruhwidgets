@@ -17,7 +17,6 @@ const getFFZEmotes = (res: FFZResponse): FFZEmote[] => {
 };
 
 export const getEmotes = async (channel: string, broadcasterId: string): Promise<Emotes> => {
-	console.log(broadcasterId);
 	const stvGlobalEmotes: Promise<STVEmote[]> = fetch('https://api.7tv.app/v2/emotes/global', {
 		method: 'GET',
 	})

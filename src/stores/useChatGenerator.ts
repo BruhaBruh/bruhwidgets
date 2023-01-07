@@ -1,4 +1,5 @@
 import create from 'zustand';
+import { fromBase64, toBase64 } from '~/lib/base64';
 import { AnimationName, AnimationOptions, AnimationTimingFunction } from '~/types/animation';
 import { ChatCustomNicknameColor, ChatSettings, ChatType } from '~/types/chatSettings';
 
@@ -53,9 +54,11 @@ type ChatGeneratorFunctions = {
 	setBanWordReplacement: (banWordReplacement: string) => void;
 	setLinkReplacement: (link: string) => void;
 	reset: () => void;
+	loadFromBase64: (s: string) => void;
+	base64: () => string;
 };
 
-export const useChatGenerator = create<ChatSettings & ChatGeneratorFunctions>((set) => ({
+export const useChatGenerator = create<ChatSettings & ChatGeneratorFunctions>((set, state) => ({
 	...initialState,
 	set(settings) {
 		set((p) => ({ ...p, ...settings }));
@@ -127,5 +130,57 @@ export const useChatGenerator = create<ChatSettings & ChatGeneratorFunctions>((s
 	setLinkReplacement: (linkReplacement) => set((p) => ({ ...p, linkReplacement })),
 	reset() {
 		set((p) => ({ ...p, ...initialState }));
+	},
+	loadFromBase64(s) {
+		const rawData = fromBase64(s);
+		const dataArray = rawData.split('\r\n');
+
+		set((p) => ({
+			...p,
+			type: dataArray[0] as ChatType,
+			isHideRewards: dataArray[1] === 'true',
+			hiddenNicknames: JSON.parse(dataArray[2]),
+			color: dataArray[3],
+			isGradientOnlyForCustomNicknames: dataArray[4] === 'true',
+			customNicknames: JSON.parse(dataArray[5]),
+			font: dataArray[6],
+			fontSize: Number(dataArray[7]),
+			isDisabledPadding: dataArray[8] === 'true',
+			hideMessagesStartsWith: dataArray[9],
+			animation: {
+				name: dataArray[10] as AnimationName,
+				timingFunction: dataArray[11] as AnimationTimingFunction,
+				options: JSON.parse(dataArray[12]),
+			},
+			isHideLinks: dataArray[13] === 'true',
+			bannedWords: JSON.parse(dataArray[14]),
+			maxMessagesToShow: Number(dataArray[15]),
+			banWordReplacement: dataArray[16],
+			linkReplacement: dataArray[17],
+		}));
+	},
+	base64() {
+		return toBase64(
+			[
+				state().type,
+				state().isHideRewards,
+				JSON.stringify(state().hiddenNicknames),
+				state().color,
+				state().isGradientOnlyForCustomNicknames,
+				JSON.stringify(state().customNicknames),
+				state().font,
+				state().fontSize,
+				state().isDisabledPadding,
+				state().hideMessagesStartsWith,
+				state().animation.name,
+				state().animation.timingFunction,
+				JSON.stringify(state().animation.options),
+				state().isHideLinks,
+				JSON.stringify(state().bannedWords),
+				state().maxMessagesToShow,
+				state().banWordReplacement,
+				state().linkReplacement,
+			].join('\r\n')
+		);
 	},
 }));

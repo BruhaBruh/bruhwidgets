@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { createRef, useCallback, useEffect, useState } from 'react';
 import tmi from 'tmi.js';
 import { ChatWidget } from '~/components/ChatWidget';
-import { fromBase64 } from '~/lib/base64';
 import { getAccessToken } from '~/lib/getAccessToken.server';
 import { getBadges } from '~/lib/getBadges.server';
 import { getBanWordRegExp } from '~/lib/getBanWordRegExp';
@@ -11,7 +10,7 @@ import { getBroadcasterId } from '~/lib/getBroadcasterId.server';
 import { getEmotes } from '~/lib/getEmotes';
 import { getLinkRegExp } from '~/lib/getLinkRegExp';
 import { replaceBetween } from '~/lib/replaceBetween';
-import { initialState } from '~/stores/useChatGenerator';
+import { useChatGenerator } from '~/stores/useChatGenerator';
 import { TwitchBadge } from '~/types/badge';
 import { ChatMessage } from '~/types/chatMessage';
 import { Emotes } from '~/types/emote';
@@ -39,7 +38,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (ctx) => 
 };
 
 const ChatWidgetPage: NextPage<PageProps> = ({ broadcasterId, badges }: PageProps) => {
-	const [chatSettings, setChatSettings] = useState(initialState);
+	const chatSettings = useChatGenerator();
 	const [client, setClient] = useState<tmi.Client>();
 	const [messages, setMessages] = useState<ChatMessage[]>([]);
 	const [emotes, setEmotes] = useState<Emotes>();
@@ -126,9 +125,8 @@ const ChatWidgetPage: NextPage<PageProps> = ({ broadcasterId, badges }: PageProp
 	useEffect(() => {
 		const { channel: queryChannel, settings } = router.query;
 		try {
-			const rawJson = fromBase64(decodeURIComponent(settings as string));
-			const json = JSON.parse(rawJson);
-			setChatSettings({ ...initialState, ...json });
+			const raw = decodeURIComponent(settings as string);
+			chatSettings.loadFromBase64(raw);
 		} catch (e) {
 			console.error(e);
 		}

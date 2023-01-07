@@ -18,9 +18,7 @@ import { NextSeo } from 'next-seo';
 import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import { ChatLinkGenerator } from '~/components/ChatLinkGenerator';
 import { useTranslation } from '~/context/TranslationContext';
-import { fromBase64, toBase64 } from '~/lib/base64';
 import { useChatGenerator } from '~/stores/useChatGenerator';
-import { ChatSettings } from '~/types/chatSettings';
 
 const getUrl = (channel: string, hash: string, path: string) => {
 	const url = new URL((process.env.NEXT_PUBLIC_ORIGIN ?? 'http://localhost:3000') + path + channel);
@@ -42,24 +40,12 @@ const Chat: NextPage = () => {
 	const [channel, setChannel] = useState('');
 	const [hash, setHash] = useState('');
 	const clipboard = useClipboard({ timeout: 500 });
-	const settingsWithFunctions = useChatGenerator();
-	const settings = useMemo(() => {
-		const s = { ...settingsWithFunctions };
-		Object.entries(s).forEach(([key, value]) => {
-			if (typeof value !== 'function') return;
-			// eslint-why s contains key because we are in entry
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			delete (s as any)[key];
-		});
-		return s as ChatSettings;
-	}, [settingsWithFunctions]);
-	const hashOfSettings = useMemo(
-		() => encodeURIComponent(toBase64(JSON.stringify(settings))),
-		[settings]
-	);
+	const settings = useChatGenerator();
+	const loadFromBase64 = useChatGenerator((s) => s.loadFromBase64);
+	const hashOfSettings = useMemo(() => encodeURIComponent(settings.base64()), [settings]);
 	const t = useTranslation();
 
-	const handleChangeChanel = useCallback(
+	const handleChangeChannel = useCallback(
 		(e: ChangeEvent<HTMLInputElement>) => {
 			setChannel(e.currentTarget.value);
 		},
@@ -73,13 +59,12 @@ const Chat: NextPage = () => {
 	);
 	const handleLoadFromHashClick = useCallback(() => {
 		try {
-			const rawJSON = fromBase64(decodeURIComponent(hash));
-			const s = JSON.parse(rawJSON);
-			settingsWithFunctions.set(s);
+			const raw = decodeURIComponent(hash);
+			loadFromBase64(raw);
 		} catch (e) {
 			console.error(e);
 		}
-	}, [hash, settingsWithFunctions]);
+	}, [hash, loadFromBase64]);
 
 	const handleOpenPreview = useCallback(() => {
 		openModal({
@@ -124,7 +109,7 @@ const Chat: NextPage = () => {
 					placeholder={t('chat-widget.channel.placeholder')}
 					withAsterisk
 					value={channel}
-					onChange={handleChangeChanel}
+					onChange={handleChangeChannel}
 				/>
 				<ChatLinkGenerator />
 				<Group spacing="sm">

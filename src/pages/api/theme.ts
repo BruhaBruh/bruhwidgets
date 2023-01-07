@@ -14,7 +14,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
 			return res.status(400).json({ message: 'valid themes is ["system", "dark", "light"]' });
 		theme = req.body.theme;
 	} catch (e) {
-		console.log(e);
+		console.error(e);
 		return res.status(500).json({ message: 'failed to deserialize content' });
 	}
 
