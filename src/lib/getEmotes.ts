@@ -100,24 +100,69 @@ export const getEmotes = async (channel: string, broadcasterId: string): Promise
 		})
 		.catch(console.error);
 
-	const [stvGlobal, bttvGlobal, ffzGlobal] = await Promise.all([
-		stvGlobalEmotes,
-		bttvGlobalEmotes,
-		ffzGlobalEmotes,
-	]);
+	const bttvEmotes: BTTVEmote[] = [];
+	const ffzEmotes: FFZEmote[] = [];
+	const stvEmotes: STVEmote[] = [];
 
-	const [stvChannel, bttvChannel, ffzChannel] = await Promise.all([
-		stvChannelEmotes,
-		bttvChannelEmotes,
-		ffzChannelEmotes,
-	]);
+	try {
+		const stvGlobal = await stvGlobalEmotes;
+		stvEmotes.push(...stvGlobal);
+	} catch (e) {
+		console.error(e);
+	}
+	try {
+		const stvChannel = await stvChannelEmotes;
+		stvEmotes.push(...stvChannel);
+	} catch (e) {
+		console.error(e);
+	}
+
+	try {
+		const ffzGlobal = await ffzGlobalEmotes;
+		ffzEmotes.push(...getFFZEmotes(ffzGlobal));
+	} catch (e) {
+		console.error(e);
+	}
+	try {
+		const ffzChannel = await ffzChannelEmotes;
+		ffzEmotes.push(...getFFZEmotes(ffzChannel));
+	} catch (e) {
+		console.error(e);
+	}
+
+	try {
+		const ffzGlobal = await ffzGlobalEmotes;
+		ffzEmotes.push(...getFFZEmotes(ffzGlobal));
+	} catch (e) {
+		console.error(e);
+	}
+	try {
+		const ffzChannel = await ffzChannelEmotes;
+		ffzEmotes.push(...getFFZEmotes(ffzChannel));
+	} catch (e) {
+		console.error(e);
+	}
+
+	try {
+		const bttvGlobal = await bttvGlobalEmotes;
+		bttvEmotes.push(...bttvGlobal);
+	} catch (e) {
+		console.error(e);
+	}
+	try {
+		const bttvChannel = await bttvChannelEmotes;
+		bttvEmotes.push(...bttvChannel.sharedEmotes);
+		bttvEmotes.push(...bttvChannel.channelEmotes);
+	} catch (e) {
+		console.error(e);
+	}
 
 	return {
 		bttv: {
 			template: 'https://cdn.betterttv.net/emote/{id}/3x',
-			emotes: [...bttvGlobal, ...bttvChannel.sharedEmotes, ...bttvChannel.channelEmotes],
+			emotes: bttvEmotes,
 		},
-		ffz: [...getFFZEmotes(ffzGlobal), ...getFFZEmotes(ffzChannel)],
-		stv: [...stvGlobal, ...stvChannel],
+		ffz: ffzEmotes,
+		stv: stvEmotes,
 	};
 };
