@@ -74,7 +74,7 @@ const generateMessage = (emotes: Emotes): string => {
 		if (faker.datatype.boolean()) {
 			message.push(faker.lorem.word());
 		} else {
-			const random = faker.datatype.number({ min: 1, max: 3 });
+			const random = faker.datatype.number({ min: 1, max: 4 });
 			if (random === 0) {
 				if (emotes.bttv.emotes.length === 0) continue;
 				const emote = emotes.bttv.emotes.at(
@@ -87,9 +87,16 @@ const generateMessage = (emotes: Emotes): string => {
 				const emote = emotes.ffz.at(faker.datatype.number({ min: 0, max: emotes.ffz.length - 1 }));
 				if (!emote) continue;
 				message.push(emote.name);
-			} else {
+			} else if (random === 2) {
 				if (emotes.stv.length === 0) continue;
-				const emote = emotes.stv.at(faker.datatype.number({ min: 0, max: emotes.ffz.length - 1 }));
+				const emote = emotes.stv.at(faker.datatype.number({ min: 0, max: emotes.stv.length - 1 }));
+				if (!emote) continue;
+				message.push(emote.name);
+			} else {
+				if (emotes.stvNew.length === 0) continue;
+				const emote = emotes.stvNew.at(
+					faker.datatype.number({ min: 0, max: emotes.stvNew.length - 1 })
+				);
 				if (!emote) continue;
 				message.push(emote.name);
 			}
@@ -123,6 +130,7 @@ const ChatWidgetPage: NextPage<PageProps> = ({ broadcasterId, badges }: PageProp
 		},
 		ffz: [],
 		stv: [],
+		stvNew: [],
 	});
 	const router = useRouter();
 
@@ -192,7 +200,7 @@ const ChatWidgetPage: NextPage<PageProps> = ({ broadcasterId, badges }: PageProp
 	);
 
 	useEffect(() => {
-		const { channel: queryChannel, settings } = router.query;
+		const { settings } = router.query;
 		try {
 			const raw = decodeURIComponent(settings as string);
 			chatSettings.loadFromBase64(raw);
@@ -204,7 +212,7 @@ const ChatWidgetPage: NextPage<PageProps> = ({ broadcasterId, badges }: PageProp
 			}
 		}
 
-		getEmotes(queryChannel as string, broadcasterId).then((v) => setEmotes(v));
+		getEmotes(broadcasterId).then((v) => setEmotes(v));
 		// eslint-why use onMount
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

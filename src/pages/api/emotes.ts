@@ -13,7 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const broadcasterId = await getBroadcasterId(channel, accessToken);
 
 	res.setHeader('Cache-Control', `public, max-age=${60 * 15}`);
-	res.status(200).json(await getEmotes(channel, broadcasterId));
+	res.status(200).json(await getEmotes(broadcasterId));
 };
 
 export default handler;

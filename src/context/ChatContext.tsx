@@ -19,6 +19,7 @@ export const ChatContext = createContext<ChatConfig>({
 		},
 		ffz: [],
 		stv: [],
+		stvNew: [],
 	},
 	badges: [],
 });

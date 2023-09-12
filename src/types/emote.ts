@@ -5,6 +5,7 @@ export type Emotes = {
 	};
 	ffz: FFZEmote[];
 	stv: STVEmote[];
+	stvNew: STVNewEmote[];
 };
 
 export type BTTVEmote = {
@@ -65,6 +66,42 @@ export type STVEmote = {
 	width: number[];
 	height: number[];
 	urls: string[][];
+};
+
+export type STVNewEmote = {
+	id: string;
+	name: string;
+	flags: number;
+	timestamp: number;
+	actor_id: string | null;
+	data: {
+		id: string;
+		name: string;
+		flags: number;
+		lifecycle: number;
+		state: ('PERSONAL' | 'LISTED')[];
+		listed: boolean;
+		animated: boolean;
+		owner: {
+			id: string;
+			username: string;
+			display_name: string;
+			avatar_url: string;
+			roles: string[];
+		};
+		host: {
+			url: string;
+			files: {
+				name: string;
+				static_name: string;
+				width: number;
+				height: number;
+				frrame_count: number;
+				size: number;
+				format: 'AVIF' | 'WEBP';
+			}[];
+		};
+	};
 };
 
 export type TwitchEmote = {

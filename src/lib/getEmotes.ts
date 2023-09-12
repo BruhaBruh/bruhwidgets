@@ -1,4 +1,4 @@
-import { BTTVEmote, Emotes, FFZEmote, STVEmote } from '~/types/emote';
+import { BTTVEmote, Emotes, FFZEmote, STVEmote, STVNewEmote } from '~/types/emote';
 
 type FFZResponse = {
 	sets: Record<
@@ -16,7 +16,7 @@ const getFFZEmotes = (res: FFZResponse): FFZEmote[] => {
 	return emotes;
 };
 
-export const getEmotes = async (channel: string, broadcasterId: string): Promise<Emotes> => {
+export const getEmotes = async (broadcasterId: string): Promise<Emotes> => {
 	const stvGlobalEmotes: Promise<STVEmote[]> = fetch('https://api.7tv.app/v2/emotes/global', {
 		method: 'GET',
 	})
@@ -25,16 +25,17 @@ export const getEmotes = async (channel: string, broadcasterId: string): Promise
 			return res.json();
 		})
 		.catch(console.error);
-	const stvChannelEmotes: Promise<STVEmote[]> = fetch(
-		'https://api.7tv.app/v2/users/' + channel + '/emotes',
+	const stvChannelEmotes: Promise<STVNewEmote[]> = fetch(
+		'https://7tv.io/v3/users/twitch/' + broadcasterId,
 		{
 			method: 'GET',
 		}
 	)
 		.then((res) => {
-			if (res.status !== 200) return [];
+			if (res.status !== 200) return { emote_set: { emotes: [] } };
 			return res.json();
 		})
+		.then((v) => v.emote_set.emotes)
 		.catch(console.error);
 
 	const bttvGlobalEmotes: Promise<BTTVEmote[]> = fetch(
@@ -103,6 +104,7 @@ export const getEmotes = async (channel: string, broadcasterId: string): Promise
 	const bttvEmotes: BTTVEmote[] = [];
 	const ffzEmotes: FFZEmote[] = [];
 	const stvEmotes: STVEmote[] = [];
+	const stvNewEmotes: STVNewEmote[] = [];
 
 	try {
 		const stvGlobal = await stvGlobalEmotes;
@@ -112,7 +114,7 @@ export const getEmotes = async (channel: string, broadcasterId: string): Promise
 	}
 	try {
 		const stvChannel = await stvChannelEmotes;
-		stvEmotes.push(...stvChannel);
+		stvNewEmotes.push(...stvChannel);
 	} catch (e) {
 		console.error(e);
 	}
@@ -164,5 +166,6 @@ export const getEmotes = async (channel: string, broadcasterId: string): Promise
 		},
 		ffz: ffzEmotes,
 		stv: stvEmotes,
+		stvNew: stvNewEmotes,
 	};
 };
