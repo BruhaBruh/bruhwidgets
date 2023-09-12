@@ -11,7 +11,7 @@ export const Text: React.FC<TextProps> = ({ message }: TextProps) => {
 	const parsedMessage = useMemo(() => {
 		const words = message.split(' ').filter((v) => v.trim() !== '');
 		const wordsOrEmotes: {
-			service?: 'twitch' | 'stv' | 'bttv' | 'ffz';
+			service?: 'twitch' | 'stv' | 'newstv' | 'bttv' | 'ffz';
 			value: string;
 		}[] = [];
 
@@ -31,6 +31,14 @@ export const Text: React.FC<TextProps> = ({ message }: TextProps) => {
 					text = '';
 				}
 				wordsOrEmotes.push({ service: 'stv', value: v });
+				return;
+			}
+			if (emotes.stvNew.find((e) => e.name === v)) {
+				if (text !== '') {
+					wordsOrEmotes.push({ value: text.trim() });
+					text = '';
+				}
+				wordsOrEmotes.push({ service: 'newstv', value: v });
 				return;
 			}
 			if (emotes.bttv.emotes.find((e) => e.code === v)) {
@@ -93,6 +101,14 @@ export const Text: React.FC<TextProps> = ({ message }: TextProps) => {
 							src={image}
 							alt=""
 						/>
+					</span>
+				);
+			}
+			if (service === 'newstv') {
+				const url = emotes.stvNew.find((e) => e.name === value)?.data.host.url;
+				return (
+					<span key={value + index} className={`text__emote ${styles.text__emote}`}>
+						<img className={`text__emote-image ${styles['text__emote-image']}`} src={url} alt="" />
 					</span>
 				);
 			}

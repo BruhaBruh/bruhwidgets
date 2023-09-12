@@ -135,7 +135,7 @@ const ChatWidgetPage: NextPage<PageProps> = ({ broadcasterId, badges }: PageProp
 			}
 		}
 
-		getEmotes(queryChannel as string, broadcasterId).then((v) => setEmotes(v));
+		getEmotes(broadcasterId).then((v) => setEmotes(v));
 
 		setClient(
 			new tmi.Client({
@@ -185,6 +185,7 @@ const ChatWidgetPage: NextPage<PageProps> = ({ broadcasterId, badges }: PageProp
 					},
 					ffz: [],
 					stv: [],
+					stvNew: [],
 				}
 			}
 			badges={badges}
