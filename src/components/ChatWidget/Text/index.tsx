@@ -107,7 +107,9 @@ export const Text: React.FC<TextProps> = ({ message }: TextProps) => {
 			if (service === 'newstv') {
 				const emote = emotes.stvNew.find((e) => e.name === value);
 				const id = emote?.data.id;
-				const file = emote?.data.host.files.toReversed().find((v) => v.name.endsWith('.webp'));
+				const file = [...(emote?.data.host.files || [])]
+					.reverse()
+					.find((v) => v.name.endsWith('.webp'));
 				const url = `https://cdn.7tv.app/emote/${id}/${file}`;
 				return (
 					<span key={value + index} className={`text__emote ${styles.text__emote}`}>
